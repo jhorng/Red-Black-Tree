@@ -12,7 +12,7 @@ struct Node{
   int value;
 };
 
-Node *initializeNode(Node *left, Node *right, int colour, int value);
+Node *initializeNode(int colour, int value);
 void addNode(Node *root, Node *child);
 
 #endif // Node_H

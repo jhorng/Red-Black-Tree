@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "Node.h"
 
-Node *initializeNode(Node *left, Node *right, int colour, int value){
+Node *initializeNode(int colour, int value){
   Node *thisNode = malloc(sizeof(Node));
-  thisNode->left = left;
-  thisNode->right = right;
+  thisNode->left = NULL;
+  thisNode->right = NULL;
   thisNode->colour = colour;
   thisNode->value = value;
   return thisNode;
@@ -13,17 +13,15 @@ Node *initializeNode(Node *left, Node *right, int colour, int value){
 
 void addNode(Node *root, Node *child){
   if(root->value < child->value){  
-    if (root->right == NULL){
+    if (root->right == NULL)
       root->right = child;
-    }
     else 
-    addNode(root->right, child);
+      addNode(root->right, child);
   }
   else if (root->value > child->value){
-    if (root->left == NULL){
-    root->left = child; 
-    }
+    if (root->left == NULL)
+      root->left = child; 
     else
-    addNode(root->left, child);
+      addNode(root->left, child);
   }
 }
