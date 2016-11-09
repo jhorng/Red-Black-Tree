@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "Node.h"
 
-Node *initializeNode(int colour, int value){
+Node *initializeNode(Node *left, Node *right, int colour, int value){
   Node *thisNode = malloc(sizeof(Node));
-  thisNode->left = NULL;
-  thisNode->right = NULL;
+  thisNode->left = left;
+  thisNode->right = right;
   thisNode->colour = colour;
   thisNode->value = value;
   return thisNode;
