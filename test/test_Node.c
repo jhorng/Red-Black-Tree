@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "Node.h"
+#include "CustomAssertion.h"
 
 Node node10, node20, node30, node40, node50;
 Node node60, node70, node80, node90, node100;
@@ -32,17 +33,28 @@ void setUp(void){
 
 void tearDown(void){}
 
+/******************************
+ *
+ *          10
+ *         /  \
+ *      NULL  NULL
+ *
+ ******************************/
 void test_a_new_node_is_initialized(void){
   int colour=BLACK;
   
   initNode(&node10, NULL, NULL, colour);
   
-  TEST_ASSERT_EQUAL(NULL, node10.left);
-  TEST_ASSERT_EQUAL(NULL, node10.right);
-  TEST_ASSERT_EQUAL(BLACK, node10.colour);
-  TEST_ASSERT_EQUAL(10, node10.value);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, colour, 10);
 }
 
+/******************************
+ *
+ *          20
+ *         /  \
+ *       10  NULL
+ *
+ ******************************/
 void test_a_new_node_is_added_as_left_child_of_a_root_node(void){
   int rootColour=BLACK;
   int leftChildColour=RED;
@@ -50,16 +62,17 @@ void test_a_new_node_is_added_as_left_child_of_a_root_node(void){
   initNode(&node20, &node10, NULL, rootColour);
   initNode(&node10, NULL, NULL, leftChildColour);
   
-  TEST_ASSERT_EQUAL(&node10, node20.left);
-  TEST_ASSERT_EQUAL(NULL, node20.right);
-  TEST_ASSERT_EQUAL(rootColour, node20.colour);
-  TEST_ASSERT_EQUAL(20, node20.value);
-  TEST_ASSERT_EQUAL(NULL, node20.left->left);
-  TEST_ASSERT_EQUAL(NULL, node20.left->right);
-  TEST_ASSERT_EQUAL(leftChildColour, node20.left->colour);
-  TEST_ASSERT_EQUAL(10, node20.left->value);
+  CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, rootColour, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, leftChildColour, 10);
 }
 
+/**************************
+ *
+ *          30
+ *         /  \
+ *      NULL  50
+ *
+ **************************/
 void test_a_new_node_is_added_as_right_child_of_a_root_node(void){
   int rootColour=BLACK;
   int rightChildColour=RED;
@@ -67,16 +80,17 @@ void test_a_new_node_is_added_as_right_child_of_a_root_node(void){
   initNode(&node30, NULL, &node50, rootColour);
   initNode(&node50, NULL, NULL, rightChildColour);
   
-  TEST_ASSERT_EQUAL(NULL, node30.left);
-  TEST_ASSERT_EQUAL(&node50, node30.right);
-  TEST_ASSERT_EQUAL(rootColour, node30.colour);
-  TEST_ASSERT_EQUAL(30, node30.value);
-  TEST_ASSERT_EQUAL(NULL, node30.right->left);
-  TEST_ASSERT_EQUAL(NULL, node30.right->right);
-  TEST_ASSERT_EQUAL(rightChildColour, node30.right->colour);
-  TEST_ASSERT_EQUAL(50, node30.right->value);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node50, rootColour, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, rightChildColour, 50);
 }
 
+/**************************
+ *
+ *          50
+ *         /  \
+ *       30   70
+ *
+ **************************/
 void test_two_new_node_is_added_as_left_and_right_child_of_a_root_node(void){
   int rootColour=BLACK;
   int leftChildColour=RED;
@@ -86,18 +100,9 @@ void test_two_new_node_is_added_as_left_and_right_child_of_a_root_node(void){
   initNode(&node30, NULL, NULL, leftChildColour);
   initNode(&node70, NULL, NULL, rightChildColour);
   
-  TEST_ASSERT_EQUAL(&node30, node50.left);
-  TEST_ASSERT_EQUAL(&node70, node50.right);
-  TEST_ASSERT_EQUAL(rootColour, node50.colour);
-  TEST_ASSERT_EQUAL(50, node50.value);
-  TEST_ASSERT_EQUAL(NULL, node50.left->left);
-  TEST_ASSERT_EQUAL(NULL, node50.left->right);
-  TEST_ASSERT_EQUAL(leftChildColour, node50.left->colour);
-  TEST_ASSERT_EQUAL(30, node50.left->value);
-  TEST_ASSERT_EQUAL(NULL, node50.right->left);
-  TEST_ASSERT_EQUAL(NULL, node50.right->right);
-  TEST_ASSERT_EQUAL(rightChildColour, node50.right->colour);
-  TEST_ASSERT_EQUAL(70, node50.right->value);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, rootColour, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, leftChildColour, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, rightChildColour, 70);
 }
 
 
