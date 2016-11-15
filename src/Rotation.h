@@ -3,6 +3,7 @@
 
 #include "Node.h"
 
+void colourChange(Node **nodePtr);
 void rotateLeft(Node **nodePtr);
 void rotateRight(Node **nodePtr);
 void rotateLeftRight(Node **nodePtr);

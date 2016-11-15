@@ -38,7 +38,7 @@ void tearDown(void){}
 /*
  *   Left rotation->fail rotated due to absence of nodes.
  *
- *        10                  10
+ *        10(B)               10(B)
  *       /  \      --->      /  \
  *     NULL NULL           NULL NULL
  */
@@ -54,14 +54,12 @@ void test_left_rotation_with_root_only_should_do_nothing(void){
 /*
  *   Left rotation->fail rotated due to absence of right node.
  *
- *        20                20
- *       /  \     --->     /  \
- *     10  NULL          10  NULL
+ *        20(B)             20(B)
+ *       /   \     --->     /   \
+ *     10(R) NULL(B)      10(R) NULL(B)
  */
-void test_left_rotation_with_a_left_node_linked_to_the_root_should_do_nothing(void){
+void xtest_left_rotation_with_a_left_node_linked_to_the_root_should_do_nothing(void){
   Node *root = &node20;
-  Node *left = &node10;
-  
   initNode(&node20, &node10, NULL, BLACK);
   initNode(&node10, NULL, NULL, RED);
   
@@ -73,14 +71,12 @@ void test_left_rotation_with_a_left_node_linked_to_the_root_should_do_nothing(vo
 
 /* *   Left rotation->success
  *
- *        10                  20
- *       /  \      --->      /  \
- *    NULL  20             10  NULL   
+ *         10(B)                 20(B)
+ *       /    \      --->      /    \
+ *    NULL(B)  20(R)         10(R)  NULL(B)   
  */
 void test_left_rotation_with_right_node_linked_to_the_root_should_rotate(void){
   Node *root = &node10;
-  Node *right = &node20;
-  
   initNode(&node10, NULL, &node20, BLACK);
   initNode(&node20, NULL, NULL, RED);
   
@@ -93,97 +89,112 @@ void test_left_rotation_with_right_node_linked_to_the_root_should_rotate(void){
 /*
  *   Right rotation->fail rotated due to absence of left
  *
- *        10                  10
- *       /  \      --->      /  \
- *    NULL  20             NULL  20   
+ *        10(B)                 10(B)
+ *       /    \      --->      /    \
+ *    NULL(B)  20(R)        NULL(B) 20(R)   
  */
-// void test_right_rotation_with_a_right_node_linked_to_the_root_should_do_nothing(void){
-  // Node *root = &node10;
-  // Node *right = &node20;
+void test_right_rotation_with_a_right_node_linked_to_the_root_should_do_nothing(void){
+  Node *root = &node10;
+  initNode(&node10, NULL, &node20, BLACK);
+  initNode(&node20, NULL, NULL, RED);
   
-  // initNode(&node10, NULL, &node20, BLACK);
-  // initNode(&node20, NULL, NULL, RED);
+  rotateRight(&root);
   
-  // rotateRight(&root);
-  
-  // CTEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, BLACK, 10);
-  // CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, RED, 20);
-// }
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, BLACK, 10);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, RED, 20);
+}
 
-// /*
- // *   Right rotation->success
- // *
- // *        20                10
- // *       /  \     --->     /  \
- // *     10  NULL         NULL  20
- // */
-// void test_right_rotation_with_a_left_node_linked_to_the_root_should_rotate(void){
-  // Node *root = &node20;
-  // Node *left = &node10;
+/*
+ *   Right rotation->success
+ *
+ *        20(B)                  10(B)
+ *       /    \        --->     /     \
+ *     10(R)  NULL(B)        NULL(B)  20(R)
+ */
+void test_right_rotation_with_a_left_node_linked_to_the_root_should_rotate(void){
+  Node *root = &node20;
+  initNode(&node20, &node10, NULL, BLACK);
+  initNode(&node10, NULL, NULL, RED);
   
-  // initNode(&node20, &node10, NULL, BLACK);
-  // initNode(&node10, NULL, NULL, RED);
+  rotateRight(&root);
   
-  // rotateRight(&root);
-  
-  // CTEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, RED, 10);
-  // CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
-// }
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, BLACK, 10);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, RED, 20);
+}
 
-// /*
- // *   Left right rotation->success
- // *
- // *        50                40
- // *       /  \     --->     /  \
- // *     30   70           30   50
- // *       \                     \
- // *       40                    70 
- // */
-// void test_rotateLeftRight_should_rotate_tree_to_correct_position(void){
-  // Node *root = &node50;
-  // Node *childLeft = &node30;
-  // Node *childRight = &node70;
-  // Node *grandChildRight = &node40;
+/*
+ *   Right rotation->success
+ *
+ *            50(B)                  30(B)
+ *           /             --->     /     \
+ *        30(R)                   10(R)  50(R)
+ *        /
+ *      10(R)
+ *
+ */
+void test_right_rotation_with_two_left_nodes_linked_to_the_root_consecutively_should_rotate(void){
+  Node *root = &node50;
+  initNode(&node50, &node30, NULL, BLACK);
+  initNode(&node30, &node10, NULL, RED);
+  initNode(&node10, NULL, NULL, RED);
   
-  // initNode(&node50, &node30, &node70, BLACK);
-  // initNode(&node30, NULL, &node40, RED);
-  // initNode(&node70, NULL, NULL, RED);
-  // initNode(&node40, NULL, NULL, BLACK);
+  printf("root value: %d\n", node50.value);
+  printf("left value: %d\n", node50.left->value);
+  printf("grandLeft value: %d\n", node50.left->left->value);
   
-  // rotateLeftRight(&root);
+  rotateRight(&root);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node10, &node50, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
+}
+
+/*
+ *   Left right rotation->success
+ *
+ *         50(B)                 40(B)
+ *       /     \       --->     /    \
+ *     30(R)   70(R)          30(R)   50(R)
+ *       \                        \
+ *       40(B)                    70(B) 
+ */
+void xtest_rotateLeftRight_should_rotate_tree_to_correct_position(void){
+  Node *root = &node50;
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, &node40, RED);
+  initNode(&node70, NULL, NULL, RED);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  rotateLeftRight(&root);
   
   // CTEST_ASSERT_EQUAL_NODE(&node40, &node30, &node50, BLACK, 40);
   // CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
-  // CTEST_ASSERT_EQUAL_NODE(&node50, NULL, &node70, BLACK, 50);
-  // CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, RED, 70);
-// }
+  // CTEST_ASSERT_EQUAL_NODE(&node50, NULL, &node70, RED, 50);
+  // CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+}
 
-// /*
- // *   Right left rotation->success
- // *
- // *        50                40
- // *       /  \     --->     /  \
- // *     30   70           50   70
- // *         /            /
- // *       40            30
- // *
- // *
- // */
-// void test_rotateRightLeft_should_rotate_tree_to_correct_position(void){
-  // Node *root = &node50;
-  // Node *childLeft = &node30;
-  // Node *childRight = &node70;
-  // Node *grandChildRight = &node40;
+/*
+ *   Right left rotation->success
+ *
+ *        50(B)                   40(B)
+ *       /    \        --->     /     \
+ *     30(R)  70(R)           50(R)   70(R)
+ *           /                /
+ *         40(B)            30(B)
+ *
+ *
+ */
+void xtest_rotateRightLeft_should_rotate_tree_to_correct_position(void){
+  Node *root = &node50;
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, NULL, RED);
+  initNode(&node70, &node40, NULL, RED);
+  initNode(&node40, NULL, NULL, BLACK);
   
-  // initNode(&node50, &node30, &node70, BLACK);
-  // initNode(&node30, NULL, NULL, RED);
-  // initNode(&node70, &node40, NULL, RED);
-  // initNode(&node40, NULL, NULL, BLACK);
-  
-  // rotateRightLeft(&root);
+  rotateRightLeft(&root);
   
   // CTEST_ASSERT_EQUAL_NODE(&node40, &node50, &node70, BLACK, 40);
   // CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, BLACK, 50);
   // CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, RED, 70);
   // CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
-// }
+}

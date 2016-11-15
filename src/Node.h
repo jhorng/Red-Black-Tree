@@ -2,9 +2,9 @@
 #define Node_H
 
 typedef enum{
-  BLACK,
-  RED,
-  DOUBLE_BLACK
+  BLACK,        // 0
+  RED,          // 1
+  DOUBLE_BLACK  // 2
 }Colour;
 
 typedef struct Node Node;

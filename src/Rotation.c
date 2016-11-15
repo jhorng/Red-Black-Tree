@@ -2,8 +2,32 @@
 #include <stdio.h>
 #include "Rotation.h"
 
+void colourChange(Node **nodePtr){
+  if((*nodePtr)->colour != BLACK){
+    (*nodePtr)->colour = BLACK;
+    colourChange(nodePtr);
+  }
+  
+  else if((*nodePtr)->left != NULL){
+    if((*nodePtr)->left->colour != RED){
+      (*nodePtr)->left->colour = RED;
+      colourChange(nodePtr);
+    }
+  }
+  
+  else if((*nodePtr)->right != NULL){
+    if((*nodePtr)->right->colour != RED){
+      (*nodePtr)->right->colour = RED;
+      colourChange(nodePtr);
+    }
+  }
+  
+  else
+    return;
+}
+
 void rotateLeft(Node **nodePtr){
-  Node *temp1, *temp2, *temp3;
+  Node *root, *child, *grandChild;
   
   if((*nodePtr)->right == NULL){
     printf("Right node does not exist!\n");
@@ -11,17 +35,19 @@ void rotateLeft(Node **nodePtr){
     return;
   }
   
-  temp1 = *nodePtr;
-  temp2 = temp1->right;
-  temp3 = temp2->left;
+  root = *nodePtr;
+  child = root->right;
+  grandChild = child->left;
   
-  *nodePtr = temp2;
-  (*nodePtr)->left = temp1;
-  (*nodePtr)->left->right = temp3;
+  *nodePtr = child;
+  (*nodePtr)->left = root;
+  (*nodePtr)->left->right = grandChild;
+  
+  colourChange(nodePtr);
 }
 
 void rotateRight(Node **nodePtr){
-  Node *temp1, *temp2, *temp3;
+  Node *root, *child, *leftGrandChild, *rightGrandChild;
   
   if((*nodePtr)->left == NULL){
     printf("Left node does not exist!\n");
@@ -29,13 +55,16 @@ void rotateRight(Node **nodePtr){
     return;
   }
   
-  temp1 = *nodePtr;
-  temp2 = temp1->left;
-  temp3 = temp2->right;
+  root = *nodePtr;
+  child = root->left;
+  rightGrandChild = child->right;
+  leftGrandChild = child->left;
   
-  *nodePtr = temp2;
-  (*nodePtr)->right = temp1;
-  (*nodePtr)->right->left = temp3;
+  *nodePtr = child;
+  (*nodePtr)->right = root;
+  (*nodePtr)->right->left = rightGrandChild;
+  
+  colourChange(nodePtr);
 }
 
 void rotateLeftRight(Node **nodePtr){
