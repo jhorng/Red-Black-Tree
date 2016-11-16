@@ -1,6 +1,7 @@
 #include "unity.h"
 #include "Node.h"
 #include "CustomAssertion.h"
+#include "Rotation.h"
 
 Node node10, node20, node30, node40, node50;
 Node node60, node70, node80, node90, node100;
@@ -35,74 +36,82 @@ void tearDown(void){}
 
 /******************************
  *
- *          10
- *         /  \
- *      NULL  NULL
+ *          10(B)
+ *         /    \
+ *      NULL(B) NULL(B)
  *
  ******************************/
 void test_a_new_node_is_initialized(void){
-  int colour=BLACK;
+  initNode(&node10, NULL, NULL, BLACK);
   
-  initNode(&node10, NULL, NULL, colour);
-  
-  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, colour, 10);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, BLACK, 10);
 }
 
-/******************************
+/****************************************************
  *
- *          20
- *         /  \
- *       10  NULL
+ *          20(B)        add 30(R)        20(B)
+ *         /    \       --------->       /    \
+ *       10(R) NULL(B)                10(R)  30(R)
  *
- ******************************/
+ ****************************************************/
 void test_a_new_node_is_added_as_left_child_of_a_root_node(void){
-  int rootColour=BLACK;
-  int leftChildColour=RED;
+  Node *root = &node20;
   
-  initNode(&node20, &node10, NULL, rootColour);
-  initNode(&node10, NULL, NULL, leftChildColour);
+  initNode(&node20, &node10, NULL, BLACK);
+  initNode(&node10, NULL, NULL, RED);
   
-  CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, rootColour, 20);
-  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, leftChildColour, 10);
+  addNode(&node20, &node30);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node20, &node10, &node30, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
 }
 
-/**************************
+/*
+ *   case 1
  *
- *          30
- *         /  \
- *      NULL  50
+ *         50(B)         add 40(R)        50(R)
+ *       /     \       ----------->      /    \
+ *     30(R)   70(R)                  30(B)  70(B)
+ *                                       \
+ *                                       40(R) 
  *
- **************************/
-void test_a_new_node_is_added_as_right_child_of_a_root_node(void){
-  int rootColour=BLACK;
-  int rightChildColour=RED;
+ */
+void test_caseOne_with_a_node_added_to_the_tree_will_recolour_the_nodes(void){
+  Node *root = &node50;
   
-  initNode(&node30, NULL, &node50, rootColour);
-  initNode(&node50, NULL, NULL, rightChildColour);
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, NULL, RED);
+  initNode(&node70, NULL, NULL, RED);
   
-  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node50, rootColour, 30);
-  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, rightChildColour, 50);
+  addNode(root->left, &node40);
+  caseOne(root);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node40, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
 }
 
-/**************************
+/*    case 2
  *
- *          50
- *         /  \
- *       30   70
+ *          20(B)   add 30(R)     20(B)   left-rotate       20(B)
+ *         /       --------->     /      ------------>      /
+ *      10(R)                   10(R)                     30(R)
+ *                                \                       /
+ *                                30(R)                 10(R)
  *
- **************************/
-void test_two_new_node_is_added_as_left_and_right_child_of_a_root_node(void){
-  int rootColour=BLACK;
-  int leftChildColour=RED;
-  int rightChildColour=RED;
+ */
+void test_caseTwo_with_a_node_added_to_the_tree_will_rotate_left(void){
+  Node *root = &node20;
   
-  initNode(&node50, &node30, &node70, rootColour);
-  initNode(&node30, NULL, NULL, leftChildColour);
-  initNode(&node70, NULL, NULL, rightChildColour);
+  initNode(&node20, &node10, NULL, BLACK);
+  initNode(&node10, NULL, NULL, RED);
   
-  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, rootColour, 50);
-  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, leftChildColour, 30);
-  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, rightChildColour, 70);
+  addNode(&node10, &node30);
+  caseTwo(root);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node20, &node30, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node10, NULL, RED, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
 }
-
-

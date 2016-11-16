@@ -64,7 +64,7 @@ void customTestAssertion(Node *root, Node *left, Node *right, Colour colour, int
   
   if(root->value != value){
     sprintf(buffer, "Expect node %d's value is %d, but it is %d",     \
-            value, value, root->value);
+            root->value, value, root->value);
     UNITY_TEST_FAIL(lineNo, buffer);
   }
   

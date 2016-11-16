@@ -16,6 +16,8 @@ struct Node{
 };
 
 Node *initNode(Node *root, Node *left, Node *right, int colour);
+void caseOne(Node *root);
+void caseTwo(Node *root);
 void addNode(Node *root, Node *child);
 
 #endif // Node_H
