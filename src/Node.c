@@ -10,27 +10,72 @@ Node *initNode(Node *root, Node *left, Node *right, int colour){
   return root;
 }
 
-void caseOne(Node *root){
+void caseOnePointOne(Node *root){
   if(root->right != NULL){
-    if(((root->right->colour) && (root->left->right->colour))== RED){
-      root->colour = RED;
-      root->left->colour = BLACK;
-      root->right->colour = BLACK;
+    if(root->left->right != NULL){
+      if((root->right->colour) && (root->left->right->colour) == RED){
+        root->colour = RED;
+        root->left->colour = BLACK;
+        root->right->colour = BLACK;
+      }
+    }
+    else if(root->left->left != NULL){
+      if((root->right->colour) && (root->left->left->colour) == RED){
+        root->colour = RED;
+        root->left->colour = BLACK;
+        root->right->colour = BLACK;
+      }
     }
   }
 }
 
-void caseTwo(Node *root){
+void caseOnePointTwo(Node *root){
+  if(root->left != NULL){
+    if(root->right->left != NULL){
+      if((root->left->colour) && (root->right->left->colour) == RED){
+        root->colour = RED;
+        root->left->colour = BLACK;
+        root->right->colour = BLACK;
+      }
+    }
+    else if(root->right->right != NULL){
+      if((root->left->colour) && (root->right->right->colour) == RED){
+        root->colour = RED;
+        root->left->colour = BLACK;
+        root->right->colour = BLACK;
+      }
+    }
+  }
+}
+
+void caseTwoPointOne(Node *root){
   if(root->right == NULL){
-    if(root->left->right->colour == RED){
+    if((root->left->colour) && (root->left->right->colour) == RED){
       rotateLeft(&(root->left));
     }
   }
   else if(root->right->colour == BLACK){
-    if(root->left->right->colour == RED){
+    if((root->left->colour) && (root->left->right->colour) == RED){
       rotateLeft(&(root->left));
     }
   }
+}
+
+void caseThreePointOne(Node *root){
+  if(root->right == NULL){
+    if((root->left->colour) && (root->left->left->colour) == RED){
+      rotateRight(&(root));
+    }
+  }
+  else if(root->right->colour == BLACK){
+    if((root->left->colour) && (root->left->left->colour) == RED){
+      rotateRight(&(root));
+    }
+  }
+  
+  root->colour = BLACK;
+  root->left->colour = RED;
+  root->right->colour = RED;
 }
 
 void addNode(Node *root, Node *child){

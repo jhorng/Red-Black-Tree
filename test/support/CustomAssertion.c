@@ -70,7 +70,7 @@ void customTestAssertion(Node *root, Node *left, Node *right, Colour colour, int
   
   if(root->colour != colour){
     sprintf(buffer, "Expect node %d is %s colour, but it is %s",    \
-            root->value, nodeColour(root->colour), nodeColour(colour));
+            root->value, nodeColour(colour), nodeColour(root->colour));
     UNITY_TEST_FAIL(lineNo, buffer);
   }
 }
