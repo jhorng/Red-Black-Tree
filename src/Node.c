@@ -50,13 +50,34 @@ void caseOnePointTwo(Node *root){
 
 void caseTwoPointOne(Node *root){
   if(root->right == NULL){
-    if((root->left->colour) && (root->left->right->colour) == RED){
-      rotateLeft(&(root->left));
+    if(root->left != NULL){
+      if((root->left->colour) && (root->left->right->colour) == RED){
+        rotateLeft(&(root->left));
+      }
     }
   }
   else if(root->right->colour == BLACK){
-    if((root->left->colour) && (root->left->right->colour) == RED){
-      rotateLeft(&(root->left));
+    if(root->left != NULL){
+      if((root->left->colour) && (root->left->right->colour) == RED){
+        rotateLeft(&(root->left));
+      }
+    }
+  }
+}
+
+void caseTwoPointTwo(Node *root){
+  if(root->left == NULL){
+    if(root->right != NULL){
+      if((root->right->colour) && (root->right->left->colour) == RED){
+        rotateRight(&(root->right));
+      }
+    }
+  }
+  else if(root->left->colour == BLACK){
+    if(root->right != NULL){
+      if((root->right->colour) && (root->right->left->colour) == RED){
+        rotateRight(&(root->right));
+      }
     }
   }
 }
@@ -70,6 +91,27 @@ void caseThreePointOne(Node *root){
   else if(root->right->colour == BLACK){
     if((root->left->colour) && (root->left->left->colour) == RED){
       rotateRight(&(root));
+    }
+  }
+  
+  root->colour = BLACK;
+  root->left->colour = RED;
+  root->right->colour = RED;
+}
+
+void caseThreePointTwo(Node *root){
+  if(root->left == NULL){
+    if(root->right != NULL){
+      if((root->right->colour) && (root->right->right->colour) == RED){
+        rotateLeft(&(root));
+      }
+    }
+  }
+  else if(root->left->colour == BLACK){
+    if(root->right != NULL){
+      if((root->right->colour) && (root->right->right->colour) == RED){
+        rotateLeft(&(root));
+      }
     }
   }
   

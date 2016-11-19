@@ -145,7 +145,7 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_leftGrandChi
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, RED, 70);
 }
 
-/*    case 2
+/*    case 2.1
  *
  *          20(B)   add 30(R)     20(B)   left-rotate       20(B)
  *         /       --------->     /      ------------>      /
@@ -168,7 +168,30 @@ void test_caseTwoPointOne_with_a_node_added_to_the_tree_as_leftGrandChildRight_w
   CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
 }
 
-/*    case 2
+/*    case 2.2
+ *
+ *      100(B)       add 110(R)    100(B)     right-rotate   100(B)
+ *          \       --------->         \      ------------>      \
+ *          130(R)                     130(R)                   110(R)
+ *                                     /                          \
+ *                                  110(R)                        130(R)
+ *
+ */
+void test_caseTwoPointTwo_with_a_node_added_to_the_tree_as_rightGrandChildleft_will_rotate_right(void){
+  Node *root = &node100;
+  
+  initNode(&node100, NULL, &node130, BLACK);
+  initNode(&node130, NULL, NULL, RED);
+  
+  addNode(&node130, &node110);
+  caseTwoPointTwo(root);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node100, NULL, &node110, BLACK, 100);
+  CTEST_ASSERT_EQUAL_NODE(&node110, NULL, &node130, RED, 110);
+  CTEST_ASSERT_EQUAL_NODE(&node130, NULL, NULL, RED, 130);
+}
+
+/*    case 3.1
  *
  *          80(B)   add 30(R)     80(B)   left-rotate        50(B)
  *         /       --------->     /      ------------>      /    \
@@ -189,4 +212,27 @@ void test_caseThreePointOne_with_a_node_added_to_the_tree_as_leftGrandChildLeft_
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node80, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
   CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, RED, 80);
+}
+
+/*    case 3.2
+ *
+ *       80(B)      add 120(R)   80(B)    left-rotate       100(B)
+ *          \      ---------->      \     ------------>    /    \ 
+ *         100(R)                  100(R)                80(R)  120(R)
+ *                                   \                     
+ *                                   120(R)              
+ *
+ */
+void test_caseThreePointTwo_with_a_node_added_to_the_tree_as_rightGrandChildtight_will_rotate_left(void){
+  Node *root = &node80;
+  
+  initNode(&node80, NULL, &node100, BLACK);
+  initNode(&node100, NULL, NULL, RED);
+  
+  addNode(&node80, &node120);
+  caseThreePointTwo(root);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node100, &node80, &node120, BLACK, 100);
+  CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, RED, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node120, NULL, NULL, RED, 120);
 }

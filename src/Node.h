@@ -19,7 +19,9 @@ Node *initNode(Node *root, Node *left, Node *right, int colour);
 void caseOnePointOne(Node *root);
 void caseOnePointTwo(Node *root);
 void caseTwoPointOne(Node *root);
+void caseTwoPointTwo(Node *root);
 void caseThreePointOne(Node *root);
+void caseThreePointTwo(Node *root);
 void addNode(Node *root, Node *child);
 
 #endif // Node_H
