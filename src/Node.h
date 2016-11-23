@@ -22,6 +22,7 @@ void caseTwoPointOne(Node *root);
 void caseTwoPointTwo(Node *root);
 void caseThreePointOne(Node *root);
 void caseThreePointTwo(Node *root);
-void addNode(Node *root, Node *child);
+void rbtAdd(Node **root, Node *child);
+// void addNode(Node *root, Node *child);
 
 #endif // Node_H

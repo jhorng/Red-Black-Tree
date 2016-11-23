@@ -128,23 +128,35 @@ void caseThreePointTwo(Node *root){
   root->right->colour = RED;
 }
 
-void addNode(Node *root, Node *child){
-  if(root->value < child->value){  
-    if (root->right == NULL){
-      root->right = child;
-      root->right->colour = RED;
-    }
-    else{
-      addNode(root->right, child);
-    }
+void rbtAdd(Node **root, Node *child){
+  if((*root) == NULL){
+    return;
   }
-  else if (root->value > child->value){
-    if (root->left == NULL){
-      root->left = child;
-      root->left->colour = RED;
-    }
-    else{
-      addNode(root->left, child);
-    }
+  
+  if(child->value < (*root)->value){
+    rbtAdd(&(*root)->left, child);
+    (*root)->left = child;
+    (*root)->left->colour = RED;
   }
 }
+
+// void addNode(Node *root, Node *child){
+  // if(root->value < child->value){  
+    // if (root->right == NULL){
+      // root->right = child;
+      // root->right->colour = RED;
+    // }
+    // else{
+      // addNode(root->right, child);
+    // }
+  // }
+  // else if (root->value > child->value){
+    // if (root->left == NULL){
+      // root->left = child;
+      // root->left->colour = RED;
+    // }
+    // else{
+      // addNode(root->left, child);
+    // }
+  // }
+// }
