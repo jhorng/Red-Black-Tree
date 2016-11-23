@@ -51,16 +51,20 @@ void caseOnePointTwo(Node *root){
 void caseTwoPointOne(Node *root){
   if(root->right == NULL){
     if(root->left != NULL){
-      if((root->left->colour) && (root->left->right->colour) == RED){
-        rotateLeft(&(root->left));
+      if(root->left->right != NULL){
+        if((root->left->colour) && (root->left->right->colour) == RED){
+          rotateLeft(&(root->left));
+        }
       }
     }
   }
   else{
     if(root->right->colour == BLACK){
       if(root->left != NULL){
-        if((root->left->colour) && (root->left->right->colour) == RED){
-          rotateLeft(&(root->left));
+        if(root->left->right != NULL){
+          if((root->left->colour) && (root->left->right->colour) == RED){
+            rotateLeft(&(root->left));
+          }
         }
       }
     }
@@ -70,16 +74,20 @@ void caseTwoPointOne(Node *root){
 void caseTwoPointTwo(Node *root){
   if(root->left == NULL){
     if(root->right != NULL){
-      if((root->right->colour) && (root->right->left->colour) == RED){
-        rotateRight(&(root->right));
+      if(root->right->left != NULL){
+        if((root->right->colour) && (root->right->left->colour) == RED){
+          rotateRight(&(root->right));
+        }
       }
     }
   }
   else{
     if(root->left->colour == BLACK){
       if(root->right != NULL){
-        if((root->right->colour) && (root->right->left->colour) == RED){
-          rotateRight(&(root->right));
+        if(root->right->left != NULL){
+          if((root->right->colour) && (root->right->left->colour) == RED){
+            rotateRight(&(root->right));
+          }
         }
       }
     }
@@ -88,56 +96,77 @@ void caseTwoPointTwo(Node *root){
 
 void caseThreePointOne(Node *root){
   if(root->right == NULL){
-    if((root->left->colour) && (root->left->left->colour) == RED){
-      rotateRight(&(root));
+    if(root->left->left != NULL){
+      if((root->left->colour) && (root->left->left->colour) == RED){
+        rotateRight(&(root));
+        root->colour = BLACK;
+        root->left->colour = RED;
+        root->right->colour = RED;
+      }
     }
   }
   else{
     if(root->right->colour == BLACK){
-      if((root->left->colour) && (root->left->left->colour) == RED){
-        rotateRight(&(root));
+      if(root->left->left != NULL){
+        if((root->left->colour) && (root->left->left->colour) == RED){
+          rotateRight(&(root));
+          root->colour = BLACK;
+          root->left->colour = RED;
+          root->right->colour = RED;
+        }
       }
     }
   }
-  
-  root->colour = BLACK;
-  root->left->colour = RED;
-  root->right->colour = RED;
 }
 
 void caseThreePointTwo(Node *root){
   if(root->left == NULL){
-    if(root->right != NULL){
+    if(root->right->right != NULL){
       if((root->right->colour) && (root->right->right->colour) == RED){
         rotateLeft(&(root));
+        root->colour = BLACK;
+        root->left->colour = RED;
+        root->right->colour = RED;
       }
     }
   }
   else{ 
     if(root->left->colour == BLACK){
-      if(root->right != NULL){
+      if(root->right->right != NULL){
         if((root->right->colour) && (root->right->right->colour) == RED){
           rotateLeft(&(root));
+          root->colour = BLACK;
+          root->left->colour = RED;
+          root->right->colour = RED;
         }
       }
     }
   }
-  
-  root->colour = BLACK;
-  root->left->colour = RED;
-  root->right->colour = RED;
 }
 
-void rbtAdd(Node **root, Node *child){
-  if((*root) == NULL){
+void intRbtAdd(Node **root, Node *child){
+  if(*root == NULL){
+    (*root) = child;
+    (*root)->colour = RED;
     return;
   }
   
   if(child->value < (*root)->value){
-    rbtAdd(&(*root)->left, child);
-    (*root)->left = child;
-    (*root)->left->colour = RED;
+    intRbtAdd(&((*root)->left), child);
+    caseOnePointOne(*root);
+    caseTwoPointOne(*root);
+    caseThreePointOne(*root);
   }
+  else if(child->value > (*root)->value){
+    intRbtAdd(&((*root)->right), child);
+    caseOnePointTwo(*root);
+    caseTwoPointTwo(*root);
+    caseThreePointTwo(*root);
+  }
+}
+
+void rbtAdd(Node **root, Node *child){
+  intRbtAdd(root, child);
 }
 
 // void addNode(Node *root, Node *child){
