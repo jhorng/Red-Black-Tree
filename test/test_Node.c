@@ -88,7 +88,7 @@ void test_a_new_node_is_added_as_left_child_of_a_root_node(void){
 /*
  *   case 1.1
  *
- *         50(B)         add 40(R)        50(R)
+ *         50(B)         add 40(R)        50(B)
  *       /     \       ----------->      /    \
  *     30(R)   70(R)                  30(B)  70(B)
  *                                       \
@@ -104,7 +104,7 @@ void test_caseOnePointOne_with_a_node_added_to_the_tree_as_leftGrandRightChild_w
   
   rbtAdd(&root, &node40);
   
-  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node40, BLACK, 30);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
@@ -113,7 +113,7 @@ void test_caseOnePointOne_with_a_node_added_to_the_tree_as_leftGrandRightChild_w
 /*
  *   case 1.1
  *
- *         50(B)         add 20(R)        50(R)
+ *         50(B)         add 20(R)        50(B)
  *       /     \       ----------->      /    \
  *     30(R)   70(R)    recolour       30(B)  70(B)
  *                                     /
@@ -129,7 +129,7 @@ void test_caseOnePointOne_with_a_node_added_to_the_tree_as_leftGrandLeftChild_wi
   
   rbtAdd(&root, &node20);
   
-  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, BLACK, 30);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, RED, 20);
@@ -138,7 +138,7 @@ void test_caseOnePointOne_with_a_node_added_to_the_tree_as_leftGrandLeftChild_wi
 /*
  *   case 1.2
  *
- *         60(B)         add 70(R)        60(R)
+ *         60(B)         add 70(R)        60(B)
  *       /     \       ----------->      /    \
  *     40(R)   80(R)     recolour     40(B)  80(B)
  *                                           /
@@ -154,7 +154,7 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_rightGrandLe
   
   rbtAdd(&root, &node70);
   
-  CTEST_ASSERT_EQUAL_NODE(&node60, &node40, &node80, RED, 60);
+  CTEST_ASSERT_EQUAL_NODE(&node60, &node40, &node80, BLACK, 60);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, RED, 70);
@@ -163,7 +163,7 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_rightGrandLe
 /*
  *   case 1.2
  *
- *         60(B)         add 90(R)        60(R)
+ *         60(B)         add 90(R)        60(B)
  *       /     \       ----------->      /    \
  *     40(R)   80(R)     recolour     40(B)  80(B)
  *                                             \
@@ -179,7 +179,7 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_rightGrandRi
   
   rbtAdd(&root, &node90);
   
-  CTEST_ASSERT_EQUAL_NODE(&node60, &node40, &node80, RED, 60);
+  CTEST_ASSERT_EQUAL_NODE(&node60, &node40, &node80, BLACK, 60);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
   CTEST_ASSERT_EQUAL_NODE(&node80, NULL, &node90, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node90, NULL, NULL, RED, 90);
@@ -189,7 +189,7 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_rightGrandRi
  *   case 1 - non-stop recolour
  *
  *              90(B)            add 10(R)                90(B)
- *            /      \          -----------> ...        /     \
+ *            /      \          -----------> ......     /     \
  *          50(R)    120(R)      recolour            50(B)    120(B)
  *         /   \    /     \                         /   \    /     \
  *      30(B) 70(B)110(B) 130(B)                30(R) 70(B)110(B) 130(B)
@@ -242,7 +242,7 @@ void test_caseTwoPointOne_with_a_node_added_to_the_tree_as_leftGrandRightChild_w
   initNode(&node10, NULL, &node20, RED);
   initNode(&node20, NULL, NULL, RED);
   
-  caseTwoPointOne(root);
+  caseTwoPointOne(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, BLACK, 30);
   CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, RED, 20);
@@ -266,7 +266,7 @@ void test_caseTwoPointOne_with_a_node_added_to_the_tree_as_leftGrandRightChild_w
   initNode(&node40, NULL, NULL, BLACK);
   initNode(&node20, NULL, NULL, RED);
   
-  caseTwoPointOne(root);
+  caseTwoPointOne(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node40, BLACK, 30);
   CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, RED, 20);
@@ -290,7 +290,7 @@ void test_caseTwoPointTwo_with_a_node_added_to_the_tree_as_rightGrandLeftChild_w
   initNode(&node130, &node110, NULL, RED);
   initNode(&node110, NULL, NULL, RED);
   
-  caseTwoPointTwo(root);
+  caseTwoPointTwo(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node100, NULL, &node110, BLACK, 100);
   CTEST_ASSERT_EQUAL_NODE(&node110, NULL, &node130, RED, 110);
@@ -314,7 +314,7 @@ void test_caseTwoPointTwo_with_a_node_added_to_the_tree_as_rightGrandLeftChild_w
   initNode(&node130, &node110, NULL, RED);
   initNode(&node110, NULL, NULL, RED);
   
-  caseTwoPointTwo(root);
+  caseTwoPointTwo(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node100, &node80, &node110, BLACK, 100);
   CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, BLACK, 80);
@@ -338,7 +338,7 @@ void test_caseThreePointOne_with_a_node_added_to_the_tree_as_leftGrandLeftChild_
   initNode(&node50, &node30, NULL, RED);
   initNode(&node30, NULL, NULL, RED);
   
-  caseThreePointOne(root);
+  caseThreePointOne(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node80, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
@@ -362,7 +362,7 @@ void test_caseThreePointOne_with_a_node_added_to_the_tree_as_leftGrandLeftChild_
   initNode(&node100, NULL, NULL, BLACK);
   initNode(&node30, NULL, NULL, RED);
   
-  caseThreePointOne(root);
+  caseThreePointOne(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node80, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
@@ -386,7 +386,7 @@ void test_caseThreePointTwo_with_a_node_added_to_the_tree_as_rightGrandRightChil
   initNode(&node100, NULL, &node120, RED);
   initNode(&node120, NULL, NULL, RED);
   
-  caseThreePointTwo(root);
+  caseThreePointTwo(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node100, &node80, &node120, BLACK, 100);
   CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, RED, 80);
@@ -410,7 +410,7 @@ void test_caseThreePointTwo_with_a_node_added_to_the_tree_as_rightGrandRightChil
   initNode(&node100, NULL, &node130, RED);
   initNode(&node130, NULL, NULL, RED);
   
-  caseThreePointTwo(root);
+  caseThreePointTwo(&root);
   
   CTEST_ASSERT_EQUAL_NODE(&node100, &node80, &node130, BLACK, 100);
   CTEST_ASSERT_EQUAL_NODE(&node80, &node50, NULL, RED, 80);
@@ -420,24 +420,23 @@ void test_caseThreePointTwo_with_a_node_added_to_the_tree_as_rightGrandRightChil
 
 /*  case 2 + case 3
  *  
- *        90(B)                      90(B)                          70(B)
- *       /    \       add 70(R)     /    \    1. right-rotate      /    \
- *    50(R) 120(B)   -------->   50(R) 120(B) --------------->  50(R)  90(R)
- *                                 \          2. left-rotate             \
+ *        100(B)                     100(B)                         70(B)
+ *       /    \       add 70(R)     /    \    1. left-rotate       /    \
+ *    50(R) 120(B)   -------->   50(R) 120(B) --------------->  50(R)  100(R)
+ *                                 \          2. right-rotate            \
  *                                70(R)                                 120(B)
  *
  */
 void test_node70_as_leftGrandRightChild_with_uncle_is_black_will_perform_case2_and_case3(void){
-  Node *root = &node90;
-  
-  initNode(&node90, &node50, &node120, BLACK);
+  Node *root = &node100;
+  initNode(&node100, &node50, &node120, BLACK);
   initNode(&node50, NULL, NULL, RED);
   initNode(&node120, NULL, NULL, BLACK);
   
   rbtAdd(&root, &node70);
   
-  CTEST_ASSERT_EQUAL_NODE(&node70, &node50, &node90, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node70, &node50, &node100, BLACK, 70);
   CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
-  CTEST_ASSERT_EQUAL_NODE(&node90, NULL, &node120, RED, 90);
+  CTEST_ASSERT_EQUAL_NODE(&node100, NULL, &node120, RED, 100);
   CTEST_ASSERT_EQUAL_NODE(&node120, NULL, NULL, BLACK, 120);
 }
