@@ -10,59 +10,107 @@ Node *initNode(Node *root, Node *left, Node *right, int colour){
   return root;
 }
 
-void caseOnePointOne(Node **root){
-  if((*root)->right != NULL){
-    if((*root)->left->right != NULL){
-      if(((*root)->right->colour) && ((*root)->left->right->colour) == RED){
-        (*root)->colour = RED;
-        (*root)->left->colour = BLACK;
-        (*root)->right->colour = BLACK;
+void caseOneLeftA(Node **root){
+  if((!isNoLeftChild(*root)) && (!isNoRightChild(*root)) && (!isNoLeftChild((*root)->left))){
+    if((leftChildColour(*root)) && (rightChildColour(*root)) && (leftChildColour((*root)->left))){
+      if(!isNoRightChild((*root)->left)){
+        if(rightChildColour((*root)->left) == BLACK){
+          (*root)->colour = RED;
+          leftChildColour(*root) = BLACK;
+          rightChildColour(*root) = BLACK;
+        }
       }
-    }
-    else if((*root)->left->left != NULL){
-      if(((*root)->right->colour) && ((*root)->left->left->colour) == RED){
+      else{
         (*root)->colour = RED;
-        (*root)->left->colour = BLACK;
-        (*root)->right->colour = BLACK;
+        leftChildColour(*root) = BLACK;
+        rightChildColour(*root) = BLACK;
       }
     }
   }
+}
+
+void caseOneLeftB(Node **root){
+  if((!isNoLeftChild(*root)) && (!isNoRightChild(*root)) && (!isNoRightChild((*root)->left))){
+    if((leftChildColour(*root)) && (rightChildColour(*root)) && (rightChildColour((*root)->left))){
+      if(!isNoLeftChild((*root)->left)){
+        if(leftChildColour((*root)->left) == BLACK){
+          (*root)->colour = RED;
+          leftChildColour(*root) = BLACK;
+          rightChildColour(*root) = BLACK;
+        }
+      }
+      else{
+        (*root)->colour = RED;
+        leftChildColour(*root) = BLACK;
+        rightChildColour(*root) = BLACK;
+      }
+    }
+  }
+}
+
+void caseOneRightA(Node **root){
+  if((!isNoLeftChild(*root)) && (!isNoRightChild(*root)) && (!isNoRightChild((*root)->right))){
+    if((leftChildColour(*root)) && (rightChildColour(*root)) && (rightChildColour((*root)->right))){
+      if(!isNoLeftChild((*root)->right)){
+        if(leftChildColour((*root)->right) == BLACK){
+          (*root)->colour = RED;
+          leftChildColour(*root) = BLACK;
+          rightChildColour(*root) = BLACK;
+        }
+      }
+      else{
+        (*root)->colour = RED;
+        leftChildColour(*root) = BLACK;
+        rightChildColour(*root) = BLACK;
+      }
+    }
+  }
+}
+
+void caseOneRightB(Node **root){
+  if((!isNoLeftChild(*root)) && (!isNoRightChild(*root)) && (!isNoLeftChild((*root)->right))){
+    if((leftChildColour(*root)) && (rightChildColour(*root)) && (leftChildColour((*root)->right))){
+      if(!isNoRightChild((*root)->right)){
+        if(rightChildColour((*root)->right) == BLACK){
+          (*root)->colour = RED;
+          leftChildColour(*root) = BLACK;
+          rightChildColour(*root) = BLACK;
+        }
+      }
+      else{
+        (*root)->colour = RED;
+        leftChildColour(*root) = BLACK;
+        rightChildColour(*root) = BLACK;
+      }
+    }
+  }
+}
+
+void caseOnePointOne(Node **root){
+  caseOneLeftA(root);
+  caseOneLeftB(root);
 }
 
 void caseOnePointTwo(Node **root){
-  if((*root)->left != NULL){
-    if((*root)->right->left != NULL){
-      if(((*root)->left->colour) && ((*root)->right->left->colour) == RED){
-        (*root)->colour = RED;
-        (*root)->left->colour = BLACK;
-        (*root)->right->colour = BLACK;
-      }
-    }
-    else if((*root)->right->right != NULL){
-      if(((*root)->left->colour) && ((*root)->right->right->colour) == RED){
-        (*root)->colour = RED;
-        (*root)->left->colour = BLACK;
-        (*root)->right->colour = BLACK;
-      }
-    }
-  }
+  caseOneRightA(root);
+  caseOneRightB(root);
 }
 
 void caseTwoPointOne(Node **root){
-  if((*root)->right == NULL){
-    if((*root)->left != NULL){
-      if((*root)->left->right != NULL){
-        if(((*root)->left->colour) && ((*root)->left->right->colour) == RED){
+  if(isNoRightChild(*root)){
+    if(!isNoLeftChild(*root)){
+      if(!isNoRightChild((*root)->left)){
+        if(leftChildColour(*root) && rightChildColour((*root)->left) == RED){
           rotateLeft(&((*root)->left));
         }
       }
     }
   }
   else{
-    if((*root)->right->colour == BLACK){
-      if((*root)->left != NULL){
-        if((*root)->left->right != NULL){
-          if(((*root)->left->colour) && ((*root)->left->right->colour) == RED){
+    if(rightChildColour(*root) == BLACK){
+      if(!isNoLeftChild(*root)){
+        if(!isNoRightChild((*root)->left)){
+          if((leftChildColour(*root)) && (rightChildColour((*root)->left)) == RED){
             rotateLeft(&((*root)->left));
           }
         }
@@ -72,20 +120,20 @@ void caseTwoPointOne(Node **root){
 }
 
 void caseTwoPointTwo(Node **root){
-  if((*root)->left == NULL){
-    if((*root)->right != NULL){
-      if((*root)->right->left != NULL){
-        if(((*root)->right->colour) && ((*root)->right->left->colour) == RED){
+  if(isNoLeftChild(*root)){
+    if(!isNoRightChild(*root)){
+      if(!isNoLeftChild((*root)->right)){
+        if((rightChildColour(*root)) && (leftChildColour((*root)->right)) == RED){
           rotateRight(&((*root)->right));
         }
       }
     }
   }
   else{
-    if((*root)->left->colour == BLACK){
-      if((*root)->right != NULL){
-        if((*root)->right->left != NULL){
-          if(((*root)->right->colour) && ((*root)->right->left->colour) == RED){
+    if(leftChildColour(*root) == BLACK){
+      if(!isNoRightChild(*root)){
+        if(!isNoLeftChild((*root)->right)){
+          if((rightChildColour(*root)) && (leftChildColour((*root)->right)) == RED){
             rotateRight(&((*root)->right));
           }
         }
@@ -95,24 +143,24 @@ void caseTwoPointTwo(Node **root){
 }
 
 void caseThreePointOne(Node **root){
-  if((*root)->right == NULL){
-    if((*root)->left->left != NULL){
-      if(((*root)->left->colour) && ((*root)->left->left->colour) == RED){
+  if(isNoRightChild(*root)){
+    if(!isNoLeftChild((*root)->left)){
+      if((leftChildColour(*root)) && (leftChildColour((*root)->left)) == RED){
         rotateRight(&((*root)));
         (*root)->colour = BLACK;
-        (*root)->left->colour = RED;
-        (*root)->right->colour = RED;
+        leftChildColour(*root) = RED;
+        rightChildColour(*root) = RED;
       }
     }
   }
   else{
-    if((*root)->right->colour == BLACK){
-      if((*root)->left->left != NULL){
-        if(((*root)->left->colour) && ((*root)->left->left->colour) == RED){
+    if(rightChildColour(*root) == BLACK){
+      if(!isNoLeftChild((*root)->left)){
+        if((leftChildColour(*root)) && (leftChildColour((*root)->left)) == RED){
           rotateRight(&((*root)));
           (*root)->colour = BLACK;
-          (*root)->left->colour = RED;
-          (*root)->right->colour = RED;
+          leftChildColour(*root) = RED;
+          rightChildColour(*root) = RED;
         }
       }
     }
@@ -120,24 +168,24 @@ void caseThreePointOne(Node **root){
 }
 
 void caseThreePointTwo(Node **root){
-  if((*root)->left == NULL){
-    if((*root)->right->right != NULL){
-      if(((*root)->right->colour) && ((*root)->right->right->colour) == RED){
+  if(isNoLeftChild(*root)){
+    if(!isNoRightChild((*root)->right)){
+      if((rightChildColour(*root)) && (rightChildColour((*root)->right)) == RED){
         rotateLeft(&((*root)));
         (*root)->colour = BLACK;
-        (*root)->left->colour = RED;
-        (*root)->right->colour = RED;
+        leftChildColour(*root) = RED;
+        rightChildColour(*root) = RED;
       }
     }
   }
   else{ 
-    if((*root)->left->colour == BLACK){
-      if((*root)->right->right != NULL){
-        if(((*root)->right->colour) && ((*root)->right->right->colour) == RED){
+    if(leftChildColour(*root) == BLACK){
+      if(!isNoRightChild((*root)->right)){
+        if((rightChildColour(*root)) && (rightChildColour((*root)->right)) == RED){
           rotateLeft(&((*root)));
           (*root)->colour = BLACK;
-          (*root)->left->colour = RED;
-          (*root)->right->colour = RED;
+          leftChildColour(*root) = RED;
+          rightChildColour(*root) = RED;
         }
       }
     }
@@ -171,24 +219,3 @@ void rbtAdd(Node **root, Node *child){
     (*root)->colour = BLACK;
   }
 }
-
-// void addNode(Node *root, Node *child){
-  // if(root->value < child->value){  
-    // if (root->right == NULL){
-      // root->right = child;
-      // root->right->colour = RED;
-    // }
-    // else{
-      // addNode(root->right, child);
-    // }
-  // }
-  // else if (root->value > child->value){
-    // if (root->left == NULL){
-      // root->left = child;
-      // root->left->colour = RED;
-    // }
-    // else{
-      // addNode(root->left, child);
-    // }
-  // }
-// }

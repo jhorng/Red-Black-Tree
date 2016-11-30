@@ -3,9 +3,9 @@
 #include "CustomAssertion.h"
 #include "Rotation.h"
 
-Node node10, node20, node30, node40, node50;
-Node node60, node70, node80, node90, node100;
-Node node110, node120, node130, node140, node150; 
+Node node10, node20, node25, node30, node40, node50;
+Node node60, node70, node80, node90, node95, node100, node105;
+Node node110, node120, node130, node140, node150, node160; 
 
 void defineNode(Node *node, int colour, int value){
   node->left = NULL;
@@ -17,6 +17,7 @@ void defineNode(Node *node, int colour, int value){
 void setUp(void){
   defineNode(&node10, BLACK, 10);
   defineNode(&node20, BLACK, 20);
+  defineNode(&node25, BLACK, 25);
   defineNode(&node30, BLACK, 30);
   defineNode(&node40, BLACK, 40);
   defineNode(&node50, BLACK, 50);
@@ -24,12 +25,15 @@ void setUp(void){
   defineNode(&node70, BLACK, 70);
   defineNode(&node80, BLACK, 80);
   defineNode(&node90, BLACK, 90);
+  defineNode(&node95, BLACK, 95);
   defineNode(&node100, BLACK, 100);
+  defineNode(&node105, BLACK, 105);
   defineNode(&node110, BLACK, 110);
   defineNode(&node120, BLACK, 120);
   defineNode(&node130, BLACK, 130);
   defineNode(&node140, BLACK, 140);
   defineNode(&node150, BLACK, 150);
+  defineNode(&node160, BLACK, 160);
 }
 
 void tearDown(void){}
@@ -192,9 +196,9 @@ void test_caseOnePointTwo_with_a_node_added_to_the_tree_at_right_of_rightGrandRi
  *            /      \          -----------> ......     /     \
  *          50(R)    120(R)      recolour            50(B)    120(B)
  *         /   \    /     \                         /   \    /     \
- *      30(B) 70(B)110(B) 130(B)                30(R) 70(B)110(B) 130(B)
- *      /   \                                  /   \
- *    20(R)40(R)                            20(B)40(B)
+ *      30(B) 70(B)110(B) 130(B)                 30(R)70(B)110(B) 130(B)
+ *      /   \                                   /   \
+ *    20(R)40(R)                             20(B)40(B)
  *                                           /
  *                                        10(R)
  *
@@ -224,6 +228,129 @@ void test_node10_added_at_the_left_most_as_red_will_recolour_again_and_again_til
   CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
   CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
+}
+
+/*
+ *   case 1 - non-stop recolour
+ *
+ *              90(B)            add 80(R)                90(B)
+ *            /      \          -----------> ......     /     \
+ *          40(R)    120(R)      recolour            40(B)    120(B)
+ *         /   \    /     \                         /   \    /     \
+ *      30(B) 60(B)110(B) 130(B)                30(B) 60(R)110(B) 130(B)
+ *            /  \                                    /  \
+ *          50(R)70(R)                             50(B)70(B)
+ *                                                        \
+ *                                                        80(R)
+ *
+ */
+void test_node80_added_will_recolour_again_and_again_till_the_main_root_but_the_colour_of_root_unchange(void){
+  Node *root = &node90;
+  
+  initNode(&node90, &node40, &node120, BLACK);
+  initNode(&node40, &node30, &node60, RED);
+  initNode(&node120, &node110, &node130, RED);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node60, &node50, &node70, BLACK);
+  initNode(&node110, NULL, NULL, BLACK);
+  initNode(&node130, NULL, NULL, BLACK);
+  initNode(&node50, NULL, NULL, RED);
+  initNode(&node70, NULL, NULL, RED);
+  
+  rbtAdd(&root, &node80);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node90, &node40, &node120, BLACK, 90);
+  CTEST_ASSERT_EQUAL_NODE(&node40, &node30, &node60, BLACK, 40);
+  CTEST_ASSERT_EQUAL_NODE(&node120, &node110, &node130, BLACK, 120);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node60, &node50, &node70, RED, 60);
+  CTEST_ASSERT_EQUAL_NODE(&node110, NULL, NULL, BLACK, 110);
+  CTEST_ASSERT_EQUAL_NODE(&node130, NULL, NULL, BLACK, 130);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, &node80, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, RED, 80);
+}
+
+/*
+ *   case 1 - non-stop recolour
+ *
+ *              90(B)            add 95(R)                90(B)
+ *            /      \          -----------> ......     /     \
+ *          50(R)   130(R)       recolour            50(B)   130(B)
+ *         /   \    /    \                         /   \    /     \
+ *      30(B) 70(B)110(B)150(B)                30(B) 70(B)110(R) 150(B)
+ *                /   \                                  /   \
+ *              100(R)120(R)                          100(B)120(B)
+ *                                                     /
+ *                                                  95(R)
+ *
+ */
+void test_node95_added_to_the_tree_will_recolour_again_and_again_till_the_main_root_but_the_colour_of_root_unchange(void){
+  Node *root = &node90;
+  
+  initNode(&node90, &node50, &node130, BLACK);
+  initNode(&node50, &node30, &node70, RED);
+  initNode(&node130, &node110, &node150, RED);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, BLACK);
+  initNode(&node110, &node100, &node120, BLACK);
+  initNode(&node150, NULL, NULL, BLACK);
+  initNode(&node100, NULL, NULL, RED);
+  initNode(&node120, NULL, NULL, RED);
+  
+  rbtAdd(&root, &node95);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node90, &node50, &node130, BLACK, 90);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node130, &node110, &node150, BLACK, 130);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node110, &node100, &node120, RED, 110);
+  CTEST_ASSERT_EQUAL_NODE(&node150, NULL, NULL, BLACK, 150);
+  CTEST_ASSERT_EQUAL_NODE(&node100, &node95, NULL, BLACK, 100);
+  CTEST_ASSERT_EQUAL_NODE(&node120, NULL, NULL, BLACK, 120);
+  CTEST_ASSERT_EQUAL_NODE(&node95, NULL, NULL, RED, 95);
+}
+
+/*
+ *   case 1 - non-stop recolour
+ *
+ *              90(B)            add 130(R)              90(B)
+ *            /      \          -----------> ......     /     \
+ *          50(R)   120(R)       recolour            50(B)   120(B)
+ *         /   \    /    \                         /   \    /     \
+ *      30(B) 70(B)110(B)150(B)                30(B) 70(B)110(B)150(R)
+ *                      /   \                                   /   \
+ *                   140(R)160(R)                           140(B)160(B)
+ *                                                           /
+ *                                                        130(R)
+ *
+ */
+void test_node130_added_to_the_tree_will_recolour_again_and_again_till_the_main_root_but_the_colour_of_root_unchange(void){
+  Node *root = &node90;
+  
+  initNode(&node90, &node50, &node120, BLACK);
+  initNode(&node50, &node30, &node70, RED);
+  initNode(&node120, &node110, &node150, RED);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, BLACK);
+  initNode(&node110, NULL, NULL, BLACK);
+  initNode(&node150, &node140, &node160, BLACK);
+  initNode(&node140, NULL, NULL, RED);
+  initNode(&node160, NULL, NULL, RED);
+  
+  rbtAdd(&root, &node130);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node90, &node50, &node120, BLACK, 90);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node120, &node110, &node150, BLACK, 120);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node110, NULL, NULL, BLACK, 110);
+  CTEST_ASSERT_EQUAL_NODE(&node150, &node140, &node160, RED, 150);
+  CTEST_ASSERT_EQUAL_NODE(&node140, &node130, NULL, BLACK, 140);
+  CTEST_ASSERT_EQUAL_NODE(&node160, NULL, NULL, BLACK, 160);
+  CTEST_ASSERT_EQUAL_NODE(&node130, NULL, NULL, RED, 130);
 }
 
 /*    case 2.1
