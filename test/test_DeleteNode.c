@@ -1,6 +1,8 @@
 #include "unity.h"
 #include "DeleteNode.h"
+#include "CustomAssertion.h"
 #include "Node.h"
+#include "Rotation.h"
 
 Node node10, node20, node25, node30, node40, node50;
 Node node60, node70, node80, node90, node95, node100, node105;
@@ -37,13 +39,20 @@ void setUp(void){
 
 void tearDown(void){}
 
-void test_dummy_func(void){
+void test_remove_node80_after_added_to_node60(void){
+  ReturnedObject ro;
+  
   Node *root = &node60;
   
   initNode(&node60, NULL, NULL, BLACK);
   
   rbtAdd(&root, &node80);
   
-  CTEST_ASSERT_EQUAL(&node60, NULL, &node80, BLACK, 60);
-  CTEST_ASSERT_EQUAL(&node80, NULL, NULL, RED, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node60, NULL, &node80, BLACK, 60);
+  CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, RED, 80);
+  
+  ro = rbtRemoveInt(&node80);
+  
+  TEST_ASSERT_EQUAL_PTR(&node80, ro.removedNode);
+  TEST_ASSERT_EQUAL(DOUBLE_BLACK, ro.returnedColour);
 }
