@@ -30,34 +30,34 @@ void customTestAssertion(Node *root, Node *left, Node *right, Colour colour, int
   
   if(root->left != left){
     if(root->left == NULL){
-      sprintf(buffer, "Expect left node is NULL, but it is %d.", left->value);
+      sprintf(buffer, "Expect left node is %d, but it is NULL.", left->value);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
     else if(left == NULL){
-      sprintf(buffer,"Expect left node is %d(0x%p), but it is NULL",   \
+      sprintf(buffer,"Expect left node is NULL, but it is %d(0x%p)",   \
               root->left->value, root->left);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
     else{
-      sprintf(buffer,"Expect left node is %d(0x%p), but it is %d",     \
-              root->left->value, root->left, left->value);
+      sprintf(buffer,"Expect left node is %d, but it is %d(0x%p)",     \
+              left->value, root->left->value, root->left);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
   }
   
   if(root->right != right){
     if(root->right == NULL){
-      sprintf(buffer,"Expect right node is NULL, but it is %d", right->value);
+      sprintf(buffer,"Expect right node is %d, but it is NULL", right->value);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
     else if(right == NULL){
-      sprintf(buffer,"Expect right node is %d(0x%p), but it is NULL",   \
+      sprintf(buffer,"Expect right node is NULL, but it is %d(0x%p)",   \
               root->right->value, root->right);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
     else{
-      sprintf(buffer,"Expect right node is %d(0x%p), but it is %d",     \
-              root->right->value, root->right, right->value);
+      sprintf(buffer,"Expect right node is %d, but it is %d(0x%p)",     \
+              right->value, root->right, root->right->value);
       UNITY_TEST_FAIL(lineNo, buffer);
     }
   }

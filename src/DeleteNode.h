@@ -9,6 +9,9 @@ struct ReturnedObject{
   Colour returnedColour;
 };
 
-ReturnedObject rbtRemoveInt(Node *nodePtr);
+ReturnedObject rbtRemoveNode(Node *nodePtr);
+void caseOneAOne(Node **nodePtr);
+void caseOneATwo(Node **nodePtr);
+void caseOneA(Node **nodePtr);
 
 #endif // DeleteNode_H
