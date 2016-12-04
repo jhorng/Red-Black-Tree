@@ -39,7 +39,29 @@ void caseOneAOne(Node **nodePtr){
 }
 
 void caseOneATwo(Node **nodePtr){
+  Node *parent = *nodePtr;
+  Node *siblingLeft = parent->left;
+  Node *siblingRight = parent->right;
+  Node *child = siblingRight->right;
   
+  if(parent == NULL){
+    printf("Parent is null!");
+    return;
+  }
+
+  if(siblingLeft->colour == DOUBLE_BLACK){
+    if(parent->colour == BLACK){
+      if(siblingRight->colour == BLACK){
+        if(child->colour == RED){
+          rotateLeft(&(*nodePtr));
+          (*nodePtr)->colour = BLACK;
+          (*nodePtr)->left->colour = BLACK;
+          (*nodePtr)->right->colour = BLACK;
+          (*nodePtr)->left->left = NULL;
+        }
+      }
+    }
+  }
 }
 
 void caseOneA(Node **nodePtr){
