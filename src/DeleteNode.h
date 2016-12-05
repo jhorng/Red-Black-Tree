@@ -13,5 +13,8 @@ ReturnedObject rbtRemoveNode(Node *nodePtr);
 void caseOneAOne(Node **nodePtr);
 void caseOneATwo(Node **nodePtr);
 void caseOneA(Node **nodePtr);
+void caseOneBOne(Node **nodePtr);
+void caseOneBTwo(Node **nodePtr);
+void caseOneB(Node **nodePtr);
 
 #endif // DeleteNode_H
