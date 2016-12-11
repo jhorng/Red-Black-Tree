@@ -12,9 +12,13 @@ struct ReturnedObject{
 ReturnedObject rbtRemoveNode(Node *nodePtr);
 void caseOneAOne(Node **nodePtr);
 void caseOneATwo(Node **nodePtr);
-void caseOneA(Node **nodePtr);
 void caseOneBOne(Node **nodePtr);
 void caseOneBTwo(Node **nodePtr);
+void caseTwoAOne(Node **nodePtr);
+void caseTwoATwo(Node **nodePtr);
+void caseTwoBOne(Node **nodePtr);
+void caseTwoBTwo(Node **nodePtr);
+void caseOneA(Node **nodePtr);
 void caseOneB(Node **nodePtr);
 
 #endif // DeleteNode_H
