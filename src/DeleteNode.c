@@ -30,19 +30,14 @@ void caseOneAOne(Node **nodePtr){
   Node *siblingRight = parent->right;
   Node *rightChild = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-
   if(siblingLeft->colour == DOUBLE_BLACK){
     if((parent->colour) && (rightChild->colour) == RED){
       if(siblingRight->colour == BLACK){
+        (*nodePtr)->left = NULL;
         rotateLeft(&(*nodePtr));
         (*nodePtr)->colour = RED;
         (*nodePtr)->left->colour = BLACK;
         (*nodePtr)->right->colour = BLACK;
-        (*nodePtr)->left->left = NULL;
       }
     }
   }
@@ -54,20 +49,15 @@ void caseOneATwo(Node **nodePtr){
   Node *siblingRight = parent->right;
   Node *rightChild = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == BLACK){
       if(siblingRight->colour == BLACK){
         if(rightChild->colour == RED){
+          (*nodePtr)->left = NULL;
           rotateLeft(&(*nodePtr));
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = BLACK;
           (*nodePtr)->right->colour = BLACK;
-          (*nodePtr)->left->left = NULL;
         }
       }
     }
@@ -79,21 +69,16 @@ void caseOneBOne(Node **nodePtr){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
-  Node *leftChild = siblingRight->left;
-  
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
+  Node *leftChildRight = siblingRight->left;
   
   if(siblingLeft->colour == DOUBLE_BLACK){
-    if(parent->colour && leftChild->colour == RED){
+    if(parent->colour && leftChildRight->colour == RED){
       if(siblingRight->colour == BLACK){
+        (*nodePtr)->left = NULL;
         rotateRightLeft(&(*nodePtr));
         (*nodePtr)->colour = RED;
         (*nodePtr)->left->colour = BLACK;
         (*nodePtr)->right->colour = BLACK;
-        (*nodePtr)->left->left = NULL;
       }
     }
   }
@@ -103,22 +88,17 @@ void caseOneBTwo(Node **nodePtr){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
-  Node *leftChild = siblingRight->left;
-  
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
+  Node *leftChildRight = siblingRight->left;
   
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == BLACK){
       if(siblingRight->colour == BLACK){
-        if(leftChild->colour == RED){
+        if(leftChildRight->colour == RED){
+          (*nodePtr)->left = NULL;
           rotateRightLeft(&(*nodePtr));
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = BLACK;
           (*nodePtr)->right->colour = BLACK;
-          (*nodePtr)->left->left = NULL;
         }
       }
     }
@@ -133,19 +113,14 @@ void caseTwoAOne(Node **nodePtr){
   Node *leftChildRight = siblingRight->left;
   Node *rightChildRight = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-  
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == BLACK){
       if(siblingRight->colour == BLACK){
         if(leftChildRight->colour == BLACK){
           if(rightChildRight->colour == BLACK){
             (*nodePtr)->colour = DOUBLE_BLACK;
-            (*nodePtr)->left->colour = BLACK;
             (*nodePtr)->right->colour = RED;
+            (*nodePtr)->left = NULL;
           }
         }
       }
@@ -160,19 +135,14 @@ void caseTwoATwo(Node **nodePtr){
   Node *leftChildRight = siblingRight->left;
   Node *rightChildRight = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-  
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == BLACK){
       if(siblingRight->colour == BLACK){
         if(leftChildRight == NULL){
           if(rightChildRight == NULL){
             (*nodePtr)->colour = DOUBLE_BLACK;
-            (*nodePtr)->left->colour = BLACK;
             (*nodePtr)->right->colour = RED;
+            (*nodePtr)->left = NULL;
           }
         }
       }
@@ -187,19 +157,14 @@ void caseTwoBOne(Node **nodePtr){
   Node *leftChildRight = siblingRight->left;
   Node *rightChildRight = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-  
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == RED){
       if(siblingRight->colour == BLACK){
         if(leftChildRight->colour == BLACK){
           if(rightChildRight->colour == BLACK){
             (*nodePtr)->colour = BLACK;
-            (*nodePtr)->left->colour = BLACK;
             (*nodePtr)->right->colour = RED;
+            (*nodePtr)->left = NULL;
           }
         }
       }
@@ -214,19 +179,14 @@ void caseTwoBTwo(Node **nodePtr){
   Node *leftChildRight = siblingRight->left;
   Node *rightChildRight = siblingRight->right;
   
-  if(parent == NULL){
-    printf("Parent is null!");
-    return;
-  }
-  
   if(siblingLeft->colour == DOUBLE_BLACK){
     if(parent->colour == RED){
       if(siblingRight->colour == BLACK){
         if(leftChildRight == NULL){
           if(rightChildRight == NULL){
             (*nodePtr)->colour = BLACK;
-            (*nodePtr)->left->colour = BLACK;
             (*nodePtr)->right->colour = RED;
+            (*nodePtr)->left = NULL;
           }
         }
       }
@@ -252,4 +212,32 @@ void caseTwoA(Node **nodePtr){
 void caseTwoB(Node **nodePtr){
   caseTwoBOne(nodePtr);
   caseTwoBTwo(nodePtr);
+}
+
+void caseThree(Node **nodePtr){
+  Node *parent = *nodePtr;
+  Node *siblingLeft = parent->left;
+  Node *siblingRight = parent->right;
+  Node *leftChildRight = siblingRight->left;
+  Node *rightChildRight = siblingRight->right;
+  
+  if(siblingLeft->colour == DOUBLE_BLACK){
+    if(parent->colour == BLACK){
+      if(siblingRight->colour == RED){
+        rotateLeft(&(*nodePtr));
+        (*nodePtr)->colour = BLACK;
+        (*nodePtr)->left->colour = RED;
+        if((*nodePtr)->left->right->left == NULL){
+          if((*nodePtr)->left->right->right == NULL){
+            caseTwoATwo(&((*nodePtr)->left));
+            caseTwoBTwo(&((*nodePtr)->left));
+          }
+        }
+        else{
+          caseTwoAOne(&((*nodePtr)->left));
+          caseTwoBOne(&((*nodePtr)->left));
+        }
+      }
+    }
+  }
 }

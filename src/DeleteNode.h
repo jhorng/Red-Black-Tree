@@ -20,5 +20,8 @@ void caseTwoBOne(Node **nodePtr);
 void caseTwoBTwo(Node **nodePtr);
 void caseOneA(Node **nodePtr);
 void caseOneB(Node **nodePtr);
+void caseTwoA(Node **nodePtr);
+void caseTwoB(Node **nodePtr);
+void caseThree(Node **nodePtr);
 
 #endif // DeleteNode_H
