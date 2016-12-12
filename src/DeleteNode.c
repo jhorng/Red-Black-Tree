@@ -25,7 +25,7 @@ ReturnedObject rbtRemoveNode(Node *nodePtr){
 
 // Case one A
 void caseOneAOne(Node **nodePtr){
-  Node *parent = *nodePtr;
+  Node *parent = (*nodePtr)->left;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
   Node *rightChild = siblingRight->right;
@@ -33,11 +33,11 @@ void caseOneAOne(Node **nodePtr){
   if(siblingLeft->colour == DOUBLE_BLACK){
     if((parent->colour) && (rightChild->colour) == RED){
       if(siblingRight->colour == BLACK){
-        (*nodePtr)->left = NULL;
-        rotateLeft(&(*nodePtr));
-        (*nodePtr)->colour = RED;
-        (*nodePtr)->left->colour = BLACK;
-        (*nodePtr)->right->colour = BLACK;
+        (*nodePtr)->left->left = NULL;
+        rotateLeft(&((*nodePtr)->left));
+        (*nodePtr)->left->colour = RED;
+        (*nodePtr)->left->left->colour = BLACK;
+        (*nodePtr)->left->right->colour = BLACK;
       }
     }
   }
@@ -240,4 +240,23 @@ void caseThree(Node **nodePtr){
       }
     }
   }
+}
+
+void intRbtDelete(Node **nodePtr, Node *node){
+  ReturnedObject retObj;
+  if(*nodePtr == node){
+    retObj = rbtRemoveNode(*nodePtr);
+    return;
+  }
+  
+  if(node->value < (*nodePtr)->value){
+    intRbtDelete(&((*nodePtr)->left), node);
+  }
+  else if(node->value > (*nodePtr)->value){
+    intRbtDelete(&((*nodePtr)->right), node);
+  }
+}
+
+void rbtDelete(Node **nodePtr, Node *node){
+  intRbtDelete(nodePtr, node);
 }
