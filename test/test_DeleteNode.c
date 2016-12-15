@@ -257,6 +257,7 @@ void test_left_double_black_child_of_red_node70_is_null_will_do_double_rotation(
  */
 void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void){
   Node *root = &node120;
+  ReturnedObject retObj;
   
   initNode(&node120, &node70, &node130, BLACK);
   initNode(&node70, &node40, &node90, BLACK);
@@ -265,7 +266,41 @@ void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void)
   initNode(&node90, &node80, NULL, BLACK);
   initNode(&node80, NULL, NULL, RED);
   
-  caseOneBTwo(&(root->left));
+  caseOneBTwo(&root, retObj, 40);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node120, &node80, &node130, BLACK, 120);
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node130, NULL, NULL, RED, 130);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node90, NULL, NULL, BLACK, 90);
+}
+
+/*
+ * case 1b.2 - node40 changes to null and rotate right at node90
+ *             then rotate left at node70.
+ *
+ *
+ *         120(B)                        120(B)                       120(B)
+ *        /     \       rotate right    /    \      rotate left      /    \
+ *     70(B)    130(R)  -----------> 70(B) 130(R)  ----------->    80(B) 130(R)
+ *    //   \             at node90   //  \          at node70     /   \
+ *    -  90(B)                       -  80(R)                  70(B) 90(B)
+ *         /                              \
+ *       80(R)                            90(B)
+ *
+ */
+void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(void){
+  Node *root = &node120;
+  ReturnedObject retObj;
+  
+  initNode(&node120, &node70, &node130, BLACK);
+  initNode(&node70, &node40, &node90, BLACK);
+  initNode(&node130, NULL, NULL, RED);
+  initNode(&node90, &node80, NULL, BLACK);
+  initNode(&node80, NULL, NULL, RED);
+  
+  retObj = rbtRemoveNode(&node40);
+  caseOneBTwo(&root, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node120, &node80, &node130, BLACK, 120);
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, BLACK, 80);

@@ -13,7 +13,7 @@ ReturnedObject rbtRemoveNode(Node *nodePtr);
 void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseOneBTwo(Node **nodePtr);
+void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseTwoAOne(Node **nodePtr);
 void caseTwoATwo(Node **nodePtr);
 void caseTwoBOne(Node **nodePtr);

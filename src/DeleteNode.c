@@ -98,7 +98,7 @@ void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
       else if(siblingLeft == NULL){
         if((deletedNode.removedNode->value == nodeValue) && (deletedNode.returnedColour == DOUBLE_BLACK)){
           rotateLeft(&((*nodePtr)->left));
-          (*nodePtr)->left->colour = BLACK;
+          (*nodePtr)->left->colour = RED;
           (*nodePtr)->left->left->colour = BLACK;
           (*nodePtr)->left->right->colour = BLACK;
         }
@@ -107,21 +107,27 @@ void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   }
 }
 
-void caseOneBTwo(Node **nodePtr){
-  Node *parent = *nodePtr;
+void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+  Node *parent = (*nodePtr)->left;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
   Node *leftChildRight = siblingRight->left;
   
-  if(siblingLeft->colour == DOUBLE_BLACK){
-    if(parent->colour == BLACK){
-      if(siblingRight->colour == BLACK){
-        if(leftChildRight->colour == RED){
-          (*nodePtr)->left = NULL;
-          rotateRightLeft(&(*nodePtr));
-          (*nodePtr)->colour = BLACK;
+  if((parent->colour == BLACK) && (siblingRight->colour == BLACK)){
+    if(leftChildRight->colour == RED){
+      if((siblingLeft != NULL) && (siblingLeft->colour == DOUBLE_BLACK)){
+        (*nodePtr)->left->left = NULL;
+        rotateRightLeft(&((*nodePtr)->left));
+        (*nodePtr)->left->colour = BLACK;
+        (*nodePtr)->left->left->colour = BLACK;
+        (*nodePtr)->left->right->colour = BLACK;
+      }
+      else if(siblingLeft == NULL){
+        if((deletedNode.removedNode->value == nodeValue) && (deletedNode.returnedColour == DOUBLE_BLACK)){
+          rotateLeft(&((*nodePtr)->left));
           (*nodePtr)->left->colour = BLACK;
-          (*nodePtr)->right->colour = BLACK;
+          (*nodePtr)->left->left->colour = BLACK;
+          (*nodePtr)->left->right->colour = BLACK;
         }
       }
     }
