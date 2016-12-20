@@ -3,6 +3,9 @@
 
 #include "Node.h"
 
+#define leftTwo(x)  (x)->left->left
+#define leftThree(x)  (x)->left->left->left
+
 typedef struct ReturnedObject ReturnedObject;
 struct ReturnedObject{
   Node *removedNode;
@@ -14,11 +17,11 @@ void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseTwoAOne(Node **nodePtr);
-void caseTwoATwo(Node **nodePtr);
-void caseTwoBOne(Node **nodePtr);
-void caseTwoBTwo(Node **nodePtr);
-void caseThree(Node **nodePtr);
+void caseTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void intRbtDelete(Node **nodePtr, Node *node);
 void rbtDelete(Node **nodePtr, Node *node);
 

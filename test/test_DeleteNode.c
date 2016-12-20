@@ -310,7 +310,7 @@ void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(v
 }
 
 /**
- *    case 2a(1)
+ *    case 2a(1) node10 is double black node.
  *    
  *          80(B)                      80(B)
  *         /    \                     //   \
@@ -325,6 +325,7 @@ void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(v
  */
 void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are_black_with_siblingLeft_is_double_black_will_flip_colour(void){
   Node *root = &node80;
+  ReturnedObject retObj;
   
   initNode(&node80, &node20, NULL, BLACK);
   initNode(&node20, &node10, &node50, BLACK);
@@ -333,7 +334,7 @@ void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseTwoAOne(&(root->left));
+  caseTwoAOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
@@ -343,7 +344,42 @@ void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are
 }
 
 /**
- *    case 2a(2)
+ *    case 2a(1) siblingLeft is null and double black. 
+ *    
+ *          80(B)                      80(B)
+ *         /    \                     //   \
+ *       20(B)   -  flip colour     20(B)   -
+ *      //  \      ----------->    /    \
+ *     NULL 50(B)                NULL  50(R)
+ *          /  \                       /  \
+ *       30(B)70(B)                 30(B) 70(B)
+ *
+ *
+ *
+ */
+void test_siblingLeft_is_null_and_double_black_will_flip_colour_when_parent_siblingRight_leftChildLeft_and_leftChildRight_are_black(void){
+  Node *root = &node80;
+  ReturnedObject retObj;
+  
+  initNode(&node80, &node20, NULL, BLACK);
+  initNode(&node20, NULL, &node50, BLACK);
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node10);
+  caseTwoAOne(&root, retObj, 10);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+}
+
+/**
+ *    case 2a(2) - siblingLeft(node10) is double black.
+ *               - Both child of siblingRight are null.
  *    
  *          80(B)                      80(B)
  *         /    \                     //   \
@@ -356,13 +392,14 @@ void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are
  */
 void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_black(void){
   Node *root = &node80;
+  ReturnedObject retObj;
   
   initNode(&node80, &node20, NULL, BLACK);
   initNode(&node20, &node10, &node50, BLACK);
   initNode(&node10, NULL, NULL, DOUBLE_BLACK);
   initNode(&node50, NULL, NULL, BLACK);
   
-  caseTwoATwo(&(root->left));
+  caseTwoATwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
@@ -370,7 +407,36 @@ void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are
 }
 
 /**
- *    case 2b(1)
+ *    case 2a(2) - siblingLeft(node10) is null and double black.
+ *               - both child in siblingRight are null.
+ *    
+ *          80(B)                      80(B)
+ *         /    \                     //   \
+ *       20(B)   -  flip colour     20(B)   -
+ *      //  \      ----------->    /    \
+ *     null 50(B)                null  50(R)
+ *
+ *
+ *
+ */
+void test_case2A2_given_siblingRight_is_null_and_double_black(void){
+  Node *root = &node80;
+  ReturnedObject retObj;
+  
+  initNode(&node80, &node20, NULL, BLACK);
+  initNode(&node20, &node10, &node50, BLACK);
+  initNode(&node50, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node10);
+  caseTwoATwo(&root, retObj, 10);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
+}
+
+/**
+ *    case 2b(1) - siblingLeft(node10) is double black.
  *    
  *          80(B)                      80(B)
  *         /    \                     /    \
@@ -385,6 +451,7 @@ void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are
  */
 void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
   Node *root = &node80;
+  ReturnedObject retObj;
   
   initNode(&node80, &node20, NULL, BLACK);
   initNode(&node20, &node10, &node50, RED);
@@ -393,7 +460,7 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseTwoBOne(&(root->left));
+  caseTwoBOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
@@ -403,7 +470,42 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
 }
 
 /**
- *    case 2b(2)
+ *    case 2b(1) - siblingLeft(node10) is null and double black.
+ *    
+ *          80(B)                      80(B)
+ *         /    \                     /    \
+ *       20(R)   -  flip colour     20(B)   -
+ *      //  \      ----------->    /    \
+ *    null 50(B)                 null  50(R)
+ *          /  \                       /  \
+ *       30(B)70(B)                 30(B) 70(B)
+ *
+ *
+ *
+ */
+void test_case2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
+  Node *root = &node80;
+  ReturnedObject retObj;
+  
+  initNode(&node80, &node20, NULL, BLACK);
+  initNode(&node20, NULL, &node50, RED);
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node10);
+  caseTwoBOne(&root, retObj, 10);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+}
+
+/**
+ *    case 2b(2) - siblingLeft(node10) is double black.
+ *               - Children of siblingRight are null.
  *    
  *          80(B)                      80(B)
  *         /    \                     /    \
@@ -416,13 +518,14 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
  */
 void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
   Node *root = &node80;
+  ReturnedObject retObj;
   
   initNode(&node80, &node20, NULL, BLACK);
   initNode(&node20, &node10, &node50, RED);
   initNode(&node10, NULL, NULL, DOUBLE_BLACK);
   initNode(&node50, NULL, NULL, BLACK);
   
-  caseTwoBTwo(&(root->left));
+  caseTwoBTwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
@@ -430,7 +533,36 @@ void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are
 }
 
 /**
- *    case 3
+ *    case 2b(2) - siblingLeft(node10) is null and double black.
+ *               - Children of siblingRight are null.
+ *    
+ *          80(B)                      80(B)
+ *         /    \                     /    \
+ *       20(R)   -  flip colour     20(B)   -
+ *      //  \      ----------->    /    \
+ *     null 50(B)                NULL  50(R)
+ *
+ *
+ *
+ */
+void test_case2B2_given_siblingLeft_is_null_and_double_black_and_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
+  Node *root = &node80;
+  ReturnedObject retObj;
+  
+  initNode(&node80, &node20, NULL, BLACK);
+  initNode(&node20, NULL, &node50, RED);
+  initNode(&node50, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node10);
+  caseTwoBTwo(&root, retObj, 10);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node20, NULL, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
+}
+
+/**
+ *    case 3 - siblingLeft(node10) is double black
  *    
  *          80(B)                      80(B)                80(B)
  *         /    \                     /    \               /    \
@@ -445,6 +577,7 @@ void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are
  */
 void test_case3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
   Node *root = &node80;
+  ReturnedObject retObj;
   
   initNode(&node80, &node20, NULL, BLACK);
   initNode(&node20, &node10, &node50, BLACK);
@@ -453,7 +586,41 @@ void test_case3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(voi
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseThree(&(root->left));
+  caseThree(&root, retObj, 10);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node80, &node50, NULL, BLACK, 80);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node20, &node70, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node30, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
+}
+
+/**
+ *    case 3 - siblingLeft(node10) is null and double black
+ *    
+ *          80(B)                      80(B)                80(B)
+ *         /    \                     /    \               /    \
+ *       20(B)   -  rotate left     50(B)   -  case 2    50(B)  -
+ *      //  \      ----------->    /   \      ------->  /   \
+ *    null 50(R)   at node20   20(R)  70(B)          20(B) 70(B)
+ *          /  \               //  \                 /   \
+ *       30(B)70(B)          null 30(B)            -   30(R)
+ *
+ *
+ *
+ */
+void test_case3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
+  Node *root = &node80;
+  ReturnedObject retObj;
+  
+  initNode(&node80, &node20, NULL, BLACK);
+  initNode(&node20, NULL, &node50, BLACK);
+  initNode(&node50, &node30, &node70, RED);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node10);
+  caseThree(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node50, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node50, &node20, &node70, BLACK, 50);
