@@ -24,7 +24,7 @@ ReturnedObject rbtRemoveNode(Node *nodePtr){
 }
 
 /**
- * case 1a(1) - Double black node can be a node or null.
+ * caseLeft 1a(1) - Double black node can be a node or null.
  *            - Parent is red and the siblingRight's right child are red.
  *            - SiblingRight is black.
  *            - Double black node become null before rotation.
@@ -38,7 +38,7 @@ ReturnedObject rbtRemoveNode(Node *nodePtr){
  *          100(R)                   
  *
  */
-void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
@@ -69,7 +69,7 @@ void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- * case 1a(2) - Double black node can a node or null.
+ * caseLeft 1a(2) - Double black node can a node or null.
  *            - Parent and siblingRight are black.
  *            - Right child of siblingRight is red.
  *            - Double black node will become null before rotation.
@@ -83,7 +83,7 @@ void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *          100(R)                   
  *
  */
-void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -111,7 +111,7 @@ void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- * case 1b(1) - Double black node can be a node or null.
+ * caseLeft 1b(1) - Double black node can be a node or null.
  *            - Parent and the left child of siblingRight are red.
  *            - SiblingRight is black.
  *            - Double black node will become null before rotation.
@@ -125,7 +125,7 @@ void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *       80(R)                      90(B)
  *
  */
-void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -155,7 +155,7 @@ void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- * case 1b(2) - Double black node can a node or null.
+ * caseLeft 1b(2) - Double black node can a node or null.
  *            - Parent and siblingRight are black.
  *            - Left child of siblingRight is red.
  *            - Double black node become null before rotation.
@@ -169,7 +169,7 @@ void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *       80(R)                    90(B)
  *
  */
-void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -197,7 +197,7 @@ void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- *    case 2a(1) - Double black node can be a node or null.
+ *    caseLeft 2a(1) - Double black node can be a node or null.
  *               - Parent, siblingRight and the children of siblingRight are black.
  *    
  *         /                         //   
@@ -210,7 +210,7 @@ void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *
  *
  */
-void caseTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -237,7 +237,7 @@ void caseTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- *    case 2a(2) - Double black node can be either a node or null.
+ *    caseLeft 2a(2) - Double black node can be either a node or null.
  *               - Both child of siblingRight are null.
  *    
  *          80(B)                      80(B)
@@ -249,7 +249,7 @@ void caseTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *
  *
  */
-void caseTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -274,7 +274,7 @@ void caseTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- *    case 2b(1) - Double black node can be a node or null.
+ *    caseLeft 2b(1) - Double black node can be a node or null.
  *               - SiblingRight and its children are black with the parent is red.
  *    
  *         /                         /   
@@ -287,7 +287,7 @@ void caseTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *
  *
  */
-void caseTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -314,7 +314,7 @@ void caseTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- *    case 2b(2) - Double black node can be a node or null.
+ *    caseLeft 2b(2) - Double black node can be a node or null.
  *               - Parent is red and siblingRight is black.
  *               - Children of siblingRight are null.
  *    
@@ -326,7 +326,7 @@ void caseTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *
  *
  */
-void caseTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -351,10 +351,10 @@ void caseTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
 }
 
 /**
- *    case 3 - double black node can be either a node or null.
+ *    caseLeft 3 - double black node can be either a node or null.
  *    
  *         /                         /                   /    
- *       20(B)     rotate left     50(B)     case 2    50(B)  
+ *       20(B)     rotate left     50(B)     caseLeft 2    50(B)  
  *      //  \      ----------->   /   \     ------->  /   \
  *    10(B) 50(R)  at node20   20(R)  70(B)         20(B) 70(B)
  *          /  \               //  \                /   \
@@ -363,7 +363,7 @@ void caseTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *
  *
  */
-void caseThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
+void caseLeftThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
   Node *parent = *nodePtr;
   Node *siblingLeft = parent->left;
   Node *siblingRight = parent->right;
@@ -378,12 +378,12 @@ void caseThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = RED;
           if(((*nodePtr)->left->right->left == NULL) && ((*nodePtr)->left->right->right == NULL)){
-            caseTwoATwo(&((*nodePtr)->left), deletedNode, nodeValue);
-            caseTwoBTwo(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoATwo(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoBTwo(&((*nodePtr)->left), deletedNode, nodeValue);
           }
           else if(((*nodePtr)->left->right->left != NULL) && ((*nodePtr)->left->right->right != NULL)){
-            caseTwoAOne(&((*nodePtr)->left), deletedNode, nodeValue);
-            caseTwoBOne(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoAOne(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoBOne(&((*nodePtr)->left), deletedNode, nodeValue);
           }
         }
         else if((siblingLeft == NULL) && (deletedNode.returnedColour == DOUBLE_BLACK)){
@@ -391,12 +391,12 @@ void caseThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = RED;
           if(((*nodePtr)->left->right->left == NULL) && ((*nodePtr)->left->right->right == NULL)){
-            caseTwoATwo(&((*nodePtr)->left), deletedNode, nodeValue);
-            caseTwoBTwo(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoATwo(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoBTwo(&((*nodePtr)->left), deletedNode, nodeValue);
           }
           else if(((*nodePtr)->left->right->left != NULL) && ((*nodePtr)->left->right->right != NULL)){
-            caseTwoAOne(&((*nodePtr)->left), deletedNode, nodeValue);
-            caseTwoBOne(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoAOne(&((*nodePtr)->left), deletedNode, nodeValue);
+            caseLeftTwoBOne(&((*nodePtr)->left), deletedNode, nodeValue);
           }
         }
       }
@@ -414,15 +414,15 @@ void intRbtDelete(Node **nodePtr, Node *node){
   
   if(node->value < (*nodePtr)->value){
     intRbtDelete(&((*nodePtr)->left), node);
-    caseOneAOne(nodePtr, retObj, (*nodePtr)->value);
-    caseOneATwo(nodePtr, retObj, (*nodePtr)->value);
-    caseOneBOne(nodePtr, retObj, (*nodePtr)->value);
-    caseOneBTwo(nodePtr, retObj, (*nodePtr)->value);
-    caseTwoAOne(nodePtr, retObj, (*nodePtr)->value);
-    caseTwoATwo(nodePtr, retObj, (*nodePtr)->value);
-    caseTwoBOne(nodePtr, retObj, (*nodePtr)->value);
-    caseTwoBTwo(nodePtr, retObj, (*nodePtr)->value);
-    caseThree(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftOneAOne(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftOneATwo(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftOneBOne(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftOneBTwo(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftTwoAOne(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftTwoATwo(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftTwoBOne(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftTwoBTwo(nodePtr, retObj, (*nodePtr)->value);
+    caseLeftThree(nodePtr, retObj, (*nodePtr)->value);
   }
   else if(node->value > (*nodePtr)->value){
     intRbtDelete(&((*nodePtr)->right), node);

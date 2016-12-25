@@ -3,9 +3,6 @@
 
 #include "Node.h"
 
-#define leftTwo(x)  (x)->left->left
-#define leftThree(x)  (x)->left->left->left
-
 typedef struct ReturnedObject ReturnedObject;
 struct ReturnedObject{
   Node *removedNode;
@@ -13,15 +10,15 @@ struct ReturnedObject{
 };
 
 ReturnedObject rbtRemoveNode(Node *nodePtr);
-void caseOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void caseThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftTwoAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseLeftThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void intRbtDelete(Node **nodePtr, Node *node);
 void rbtDelete(Node **nodePtr, Node *node);
 

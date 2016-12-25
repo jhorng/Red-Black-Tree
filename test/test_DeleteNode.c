@@ -40,7 +40,7 @@ void setUp(void){
 void tearDown(void){}
 
 /**
- * case 1a(1) - node40 will be removed and rotate left at node70.
+ * caseLeft 1a(1) - node40 will be removed and rotate left at node70.
  *
  *
  *        /    rotate left    /  
@@ -51,7 +51,7 @@ void tearDown(void){}
  *          100(R)                   
  *
  */
-void test_remove_node40_will_perform_caseOneAOne_with_parent_is_red(void){
+void test_remove_node40_will_perform_caseLeftOneAOne_with_parent_is_red(void){
   Node *parent = &node70;
   ReturnedObject retObj;
   
@@ -60,7 +60,7 @@ void test_remove_node40_will_perform_caseOneAOne_with_parent_is_red(void){
   initNode(&node90, NULL, &node100, BLACK);
   initNode(&node100, NULL, NULL, RED);
   
-  caseOneAOne(&parent, retObj, 40);
+  caseLeftOneAOne(&parent, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, RED, 90);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -68,7 +68,7 @@ void test_remove_node40_will_perform_caseOneAOne_with_parent_is_red(void){
 }
 
 /**
- * case 1a(1) - node40 will be removed and rotate left at node70.
+ * caseLeft 1a(1) - node40 will be removed and rotate left at node70.
  *
  *
  *        /   rotate left    /
@@ -79,7 +79,7 @@ void test_remove_node40_will_perform_caseOneAOne_with_parent_is_red(void){
  *         100(R)                   
  *
  */
-void test_removed_node40_as_null_will_perform_caseOneAOne_with_parent_is_red(void){
+void test_removed_node40_as_null_will_perform_caseLeftOneAOne_with_parent_is_red(void){
   Node *parent = &node70;
   ReturnedObject retObj;
   
@@ -88,7 +88,7 @@ void test_removed_node40_as_null_will_perform_caseOneAOne_with_parent_is_red(voi
   initNode(&node100, NULL, NULL, RED);
   
   retObj = rbtRemoveNode(&node40);
-  caseOneAOne(&parent, retObj, 40);
+  caseLeftOneAOne(&parent, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, RED, 90);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -96,7 +96,7 @@ void test_removed_node40_as_null_will_perform_caseOneAOne_with_parent_is_red(voi
 }
 
 /**
- * case 1a(2) - node40 will be removed and rotate left at node70.
+ * caseLeft 1a(2) - node40 will be removed and rotate left at node70.
  *
  *
  *        /       rotate left    /
@@ -107,7 +107,7 @@ void test_removed_node40_as_null_will_perform_caseOneAOne_with_parent_is_red(voi
  *          100(R)                   
  *
  */
-void test_remove_node40_will_perform_caseOneATwo_with_left_parent_is_black(void){
+void test_remove_node40_will_perform_caseLeftOneATwo_with_left_parent_is_black(void){
   Node *parent = &node70;
   ReturnedObject retObj;
   
@@ -116,7 +116,7 @@ void test_remove_node40_will_perform_caseOneATwo_with_left_parent_is_black(void)
   initNode(&node90, NULL, &node100, BLACK);
   initNode(&node100, NULL, NULL, RED);
   
-  caseOneATwo(&parent, retObj, 40);
+  caseLeftOneATwo(&parent, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, BLACK, 90);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -124,7 +124,7 @@ void test_remove_node40_will_perform_caseOneATwo_with_left_parent_is_black(void)
 }
 
 /**
- * case 1a(2) - double black null at left node70 and rotate left at node70.
+ * caseLeft 1a(2) - double black null at left node70 and rotate left at node70.
  *
  *
  *        /     rotate left    / 
@@ -144,7 +144,7 @@ void test_double_black_is_null_at_left_black_node70_with_rotate_left_at_node70(v
   initNode(&node100, NULL, NULL, RED);
   
   retObj = rbtRemoveNode(&node40);
-  caseOneATwo(&parent, retObj, 40);
+  caseLeftOneATwo(&parent, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, BLACK, 90);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -152,7 +152,7 @@ void test_double_black_is_null_at_left_black_node70_with_rotate_left_at_node70(v
 }
 
 /**
- * case 1b(1) - node40 will be removed and rotate right at node90
+ * caseLeft 1b(1) - node40 will be removed and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -164,7 +164,7 @@ void test_double_black_is_null_at_left_black_node70_with_rotate_left_at_node70(v
  *       80(R)                    90(B)
  *
  */
-void test_remove_node40_will_perform_caseOneBOne_with_left_parent_is_red(void){
+void test_remove_node40_will_perform_caseLeftOneBOne_with_left_parent_is_red(void){
   Node *root = &node70;
   ReturnedObject retObj;
   
@@ -173,7 +173,7 @@ void test_remove_node40_will_perform_caseOneBOne_with_left_parent_is_red(void){
   initNode(&node90, &node80, NULL, BLACK);
   initNode(&node80, NULL, NULL, RED);
   
-  caseOneBOne(&root, retObj, 40);
+  caseLeftOneBOne(&root, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, RED, 80);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -181,7 +181,7 @@ void test_remove_node40_will_perform_caseOneBOne_with_left_parent_is_red(void){
 }
 
 /**
- * case 1b(1) - node40 will be removed and rotate right at node90
+ * caseLeft 1b(1) - node40 will be removed and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -202,7 +202,7 @@ void test_left_double_black_child_of_red_node70_is_null_will_do_double_rotation(
   initNode(&node80, NULL, NULL, RED);
   
   retObj = rbtRemoveNode(&node40);
-  caseOneBOne(&root, retObj, 40);
+  caseLeftOneBOne(&root, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, RED, 80);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -210,7 +210,7 @@ void test_left_double_black_child_of_red_node70_is_null_will_do_double_rotation(
 }
 
 /**
- * case 1b(2) - node40 will be removed and rotate right at node90
+ * caseLeft 1b(2) - node40 will be removed and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -222,7 +222,7 @@ void test_left_double_black_child_of_red_node70_is_null_will_do_double_rotation(
  *       80(R)                   90(B)
  *
  */
-void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void){
+void test_remove_node40_will_perform_caseLeftOneBTwo_with_left_parent_is_black(void){
   Node *root = &node70;
   ReturnedObject retObj;
   
@@ -231,7 +231,7 @@ void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void)
   initNode(&node90, &node80, NULL, BLACK);
   initNode(&node80, NULL, NULL, RED);
   
-  caseOneBTwo(&root, retObj, 40);
+  caseLeftOneBTwo(&root, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -239,7 +239,7 @@ void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void)
 }
 
 /**
- * case 1b(2) - node40 changes to null and rotate right at node90
+ * caseLeft 1b(2) - node40 changes to null and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -251,7 +251,7 @@ void test_remove_node40_will_perform_caseOneBTwo_with_left_parent_is_black(void)
  *       80(R)                   90(B)
  *
  */
-void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(void){
+void test_double_black_null_will_perform_caseLeftOneBTwo_with_left_parent_is_black(void){
   Node *root = &node70;
   ReturnedObject retObj;
   
@@ -260,7 +260,7 @@ void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(v
   initNode(&node80, NULL, NULL, RED);
   
   retObj = rbtRemoveNode(&node40);
-  caseOneBTwo(&root, retObj, 40);
+  caseLeftOneBTwo(&root, retObj, 40);
   
   CTEST_ASSERT_EQUAL_NODE(&node80, &node70, &node90, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -268,7 +268,7 @@ void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(v
 }
 
 /**
- *    case 2a(1) node10 is double black node.
+ *    caseLeft 2a(1) node10 is double black node.
  *    
  *         /                          //   
  *       20(B)      flip colour     20(B)  
@@ -278,7 +278,7 @@ void test_double_black_null_will_perform_caseOneBTwo_with_left_parent_is_black(v
  *       30(B)70(B)                 30(B) 70(B)
  *
  */
-void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are_black_with_siblingLeft_is_double_black_will_flip_colour(void){
+void test_caseLeft2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are_black_with_siblingLeft_is_double_black_will_flip_colour(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -288,7 +288,7 @@ void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseTwoAOne(&root, retObj, 10);
+  caseLeftTwoAOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
@@ -297,7 +297,7 @@ void test_case2A1_given_parent_siblingRight_leftChildLeft_and_leftChildRight_are
 }
 
 /**
- *    case 2a(1) siblingLeft is null and double black. 
+ *    caseLeft 2a(1) siblingLeft is null and double black. 
  *    
  *         /                         //   
  *       20(B)     flip colour     20(B)   
@@ -317,7 +317,7 @@ void test_siblingLeft_is_null_and_double_black_will_flip_colour_when_parent_sibl
   initNode(&node70, NULL, NULL, BLACK);
   
   retObj = rbtRemoveNode(&node10);
-  caseTwoAOne(&root, retObj, 10);
+  caseLeftTwoAOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
@@ -326,7 +326,7 @@ void test_siblingLeft_is_null_and_double_black_will_flip_colour_when_parent_sibl
 }
 
 /**
- *    case 2a(2) - siblingLeft(node10) is double black.
+ *    caseLeft 2a(2) - siblingLeft(node10) is double black.
  *               - Both child of siblingRight are null.
  *    
  *         /                         //   
@@ -335,7 +335,7 @@ void test_siblingLeft_is_null_and_double_black_will_flip_colour_when_parent_sibl
  *    10(B) 50(B)              10(B)  50(R)
  *
  */
-void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_black(void){
+void test_caseLeft2A2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -343,14 +343,14 @@ void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are
   initNode(&node10, NULL, NULL, DOUBLE_BLACK);
   initNode(&node50, NULL, NULL, BLACK);
   
-  caseTwoATwo(&root, retObj, 10);
+  caseLeftTwoATwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
 }
 
 /**
- *    case 2a(2) - siblingLeft(node10) is null and double black.
+ *    caseLeft 2a(2) - siblingLeft(node10) is null and double black.
  *               - both child in siblingRight are null.
  *    
  *         /                         //   
@@ -359,7 +359,7 @@ void test_case2A2_given_siblingRight_is_black_and_both_siblingRight_children_are
  *     null 50(B)               null  50(R)
  *
  */
-void test_case2A2_given_siblingRight_is_null_and_double_black(void){
+void test_caseLeft2A2_given_siblingRight_is_null_and_double_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -367,14 +367,14 @@ void test_case2A2_given_siblingRight_is_null_and_double_black(void){
   initNode(&node50, NULL, NULL, BLACK);
   
   retObj = rbtRemoveNode(&node10);
-  caseTwoATwo(&root, retObj, 10);
+  caseLeftTwoATwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, DOUBLE_BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
 }
 
 /**
- *    case 2b(1) - siblingLeft(node10) is double black.
+ *    caseLeft 2b(1) - siblingLeft(node10) is double black.
  *    
  *         /                         /    
  *       20(R)     flip colour     20(B)   
@@ -384,7 +384,7 @@ void test_case2A2_given_siblingRight_is_null_and_double_black(void){
  *       30(B)70(B)                30(B) 70(B)
  *
  */
-void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
+void test_caseLeft2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -394,7 +394,7 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseTwoBOne(&root, retObj, 10);
+  caseLeftTwoBOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
@@ -403,7 +403,7 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
 }
 
 /**
- *    case 2b(1) - siblingLeft(node10) is null and double black.
+ *    caseLeft 2b(1) - siblingLeft(node10) is null and double black.
  *    
  *         /                         /    
  *       20(R)     flip colour     20(B)   
@@ -413,7 +413,7 @@ void test_case2B1_given_the_sblingRight_is_black_and_both_children_of_siblingRig
  *       30(B)70(B)                30(B) 70(B)
  *
  */
-void test_case2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
+void test_caseLeft2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_black_and_both_children_of_siblingRight_are_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -423,7 +423,7 @@ void test_case2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_blac
   initNode(&node70, NULL, NULL, BLACK);
   
   retObj = rbtRemoveNode(&node10);
-  caseTwoBOne(&root, retObj, 10);
+  caseLeftTwoBOne(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, &node30, &node70, RED, 50);
@@ -432,7 +432,7 @@ void test_case2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_blac
 }
 
 /**
- *    case 2b(2) - siblingLeft(node10) is double black.
+ *    caseLeft 2b(2) - siblingLeft(node10) is double black.
  *               - Children of siblingRight are null.
  *    
  *         /                         /   
@@ -441,7 +441,7 @@ void test_case2B1_given_siblingLeft_is_null_and_double_black_sblingRight_is_blac
  *    10(B) 50(B)               NULL  50(R)
  *
  */
-void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
+void test_caseLeft2B2_given_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -449,14 +449,14 @@ void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are
   initNode(&node10, NULL, NULL, DOUBLE_BLACK);
   initNode(&node50, NULL, NULL, BLACK);
   
-  caseTwoBTwo(&root, retObj, 10);
+  caseLeftTwoBTwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
 }
 
 /**
- *    case 2b(2) - siblingLeft(node10) is null and double black.
+ *    caseLeft 2b(2) - siblingLeft(node10) is null and double black.
  *               - Children of siblingRight are null.
  *    
  *         /                         /   
@@ -465,7 +465,7 @@ void test_case2B2_given_siblingRight_is_black_and_both_siblingRight_children_are
  *     null 50(B)               NULL  50(R)
  *
  */
-void test_case2B2_given_siblingLeft_is_null_and_double_black_and_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
+void test_caseLeft2B2_given_siblingLeft_is_null_and_double_black_and_siblingRight_is_black_and_both_siblingRight_children_are_null_with_the_parent_being_red(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -473,24 +473,24 @@ void test_case2B2_given_siblingLeft_is_null_and_double_black_and_siblingRight_is
   initNode(&node50, NULL, NULL, BLACK);
   
   retObj = rbtRemoveNode(&node10);
-  caseTwoBTwo(&root, retObj, 10);
+  caseLeftTwoBTwo(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node50, BLACK, 20);
   CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
 }
 
 /**
- *    case 3 - siblingLeft(node10) is double black
+ *    caseLeft 3 - siblingLeft(node10) is double black
  *    
  *         /                         /                   /    
- *       20(B)     rotate left     50(B)     case 2    50(B)  
+ *       20(B)     rotate left     50(B)     caseLeft 2    50(B)  
  *      //  \     ----------->    /   \     ------->  /   \
  *    10(B) 50(R)  at node20   20(R)  70(B)         20(B) 70(B)
  *          /  \              //  \                /   \
  *       30(B)70(B)         10(B) 30(B)           -   30(R)
  *
  */
-void test_case3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
+void test_caseLeft3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -500,7 +500,7 @@ void test_case3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(voi
   initNode(&node30, NULL, NULL, BLACK);
   initNode(&node70, NULL, NULL, BLACK);
   
-  caseThree(&root, retObj, 10);
+  caseLeftThree(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node50, &node20, &node70, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node30, BLACK, 20);
@@ -509,17 +509,17 @@ void test_case3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(voi
 }
 
 /**
- *    case 3 - siblingLeft(node10) is null and double black
+ *    caseLeft 3 - siblingLeft(node10) is null and double black
  *    
  *         /                        /                   /    
- *       20(B)     rotate left    50(B)     case 2    50(B)  
+ *       20(B)     rotate left    50(B)     caseLeft 2    50(B)  
  *      //  \     ----------->   /   \     ------->  /   \
  *    null 50(R)  at node20   20(R)  70(B)         20(B) 70(B)
  *          /  \              //  \                /   \
  *       30(B)70(B)         null 30(B)           -   30(R)
  *
  */
-void test_case3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
+void test_caseLeft3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -529,7 +529,7 @@ void test_case3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_i
   initNode(&node70, NULL, NULL, BLACK);
   
   retObj = rbtRemoveNode(&node10);
-  caseThree(&root, retObj, 10);
+  caseLeftThree(&root, retObj, 10);
   
   CTEST_ASSERT_EQUAL_NODE(&node50, &node20, &node70, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node20, NULL, &node30, BLACK, 20);
@@ -538,7 +538,7 @@ void test_case3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_i
 }
 
 /**
- * case 1a(1) - node40 will be removed and rotate left at node70.
+ * caseLeft 1a(1) - node40 will be removed and rotate left at node70.
  *
  *
  *         120(B)                       120(B)
@@ -550,7 +550,7 @@ void test_case3_given_siblingLeft_is_null_and_double_black_and_the_sblingRight_i
  *          100(R)                   
  *
  */
-void test_rbtDelete_for_case1a1(void){
+void test_rbtDelete_for_caseLeft1a1(void){
   Node *root = &node120;
   
   initNode(&node120, &node70, &node130, BLACK);
@@ -570,7 +570,7 @@ void test_rbtDelete_for_case1a1(void){
 }
 
 /**
- * case 1a(2) - node40 will be removed and rotate left at node70.
+ * caseLeft 1a(2) - node40 will be removed and rotate left at node70.
  *
  *
  *        /       rotate left    /
@@ -581,7 +581,7 @@ void test_rbtDelete_for_case1a1(void){
  *          100(R)                   
  *
  */
-void test_rbtDelete_for_case1a2(void){
+void test_rbtDelete_for_caseLeft1a2(void){
   Node *root = &node70;
   
   initNode(&node70, &node40, &node90, BLACK);
@@ -597,7 +597,7 @@ void test_rbtDelete_for_case1a2(void){
 }
 
 /**
- * case 1b(1) - node40 will be removed and rotate right at node90
+ * caseLeft 1b(1) - node40 will be removed and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -610,7 +610,7 @@ void test_rbtDelete_for_case1a2(void){
  *       80(R)                            90(B)
  *
  */
-void test_rbtDelete_for_case1b1(void){
+void test_rbtDelete_for_caseLeft1b1(void){
   Node *root = &node120;
   
   initNode(&node120, &node70, &node130, BLACK);
@@ -630,7 +630,7 @@ void test_rbtDelete_for_case1b1(void){
 }
 
 /**
- * case 1b(2) - node40 will be removed and rotate right at node90
+ * caseLeft 1b(2) - node40 will be removed and rotate right at node90
  *             then rotate left at node70.
  *
  *
@@ -642,7 +642,7 @@ void test_rbtDelete_for_case1b1(void){
  *       80(R)                   90(B)
  *
  */
-void test_rbtDelete_for_case1b2(void){
+void test_rbtDelete_for_caseLeft1b2(void){
   Node *root = &node70;
   
   initNode(&node70, &node40, &node90, BLACK);
@@ -658,7 +658,7 @@ void test_rbtDelete_for_case1b2(void){
 }
 
 /**
- *    case 2a(1) node10 is double black node.
+ *    caseLeft 2a(1) node10 is double black node.
  *    
  *         /                        //  
  *       20(B)     flip colour     20(B)  
@@ -668,7 +668,7 @@ void test_rbtDelete_for_case1b2(void){
  *       30(B)70(B)                30(B) 70(B)
  *
  */
-void test_rbtDelete_for_case2a1(void){
+void test_rbtDelete_for_caseLeft2a1(void){
   Node *root = &node20;
   
   initNode(&node20, &node10, &node50, BLACK);
@@ -686,7 +686,7 @@ void test_rbtDelete_for_case2a1(void){
 }
 
 /**
- *    case 2a(2) - siblingLeft(node10) is double black.
+ *    caseLeft 2a(2) - siblingLeft(node10) is double black.
  *               - Both child of siblingRight are null.
  *    
  *         /                         //   
@@ -695,7 +695,7 @@ void test_rbtDelete_for_case2a1(void){
  *    10(B) 50(B)              10(B)  50(R)
  *
  */
-void test_rbtDelete_for_case2a2(void){
+void test_rbtDelete_for_caseLeft2a2(void){
   Node *root = &node20;
   
   initNode(&node20, &node10, &node50, BLACK);
@@ -709,7 +709,7 @@ void test_rbtDelete_for_case2a2(void){
 }
 
 /**
- *    case 2b(1) - siblingLeft(node10) is double black.
+ *    caseLeft 2b(1) - siblingLeft(node10) is double black.
  *    
  *         /                         /    
  *       20(R)     flip colour     20(B)   
@@ -719,7 +719,7 @@ void test_rbtDelete_for_case2a2(void){
  *       30(B)70(B)                30(B) 70(B)
  *
  */
-void test_rbtDelete_for_case2b1(void){
+void test_rbtDelete_for_caseLeft2b1(void){
   Node *root = &node20;
   
   initNode(&node20, &node10, &node50, RED);
@@ -737,7 +737,7 @@ void test_rbtDelete_for_case2b1(void){
 }
 
 /**
- *    case 2b(2) - siblingLeft(node10) is double black.
+ *    caseLeft 2b(2) - siblingLeft(node10) is double black.
  *               - Children of siblingRight are null.
  *    
  *         /                         /   
@@ -746,7 +746,7 @@ void test_rbtDelete_for_case2b1(void){
  *    10(B) 50(B)               NULL  50(R)
  *
  */
-void test_rbtDelete_for_case2b2(void){
+void test_rbtDelete_for_caseLeft2b2(void){
   Node *root = &node20;
   
   initNode(&node20, &node10, &node50, RED);
@@ -760,17 +760,17 @@ void test_rbtDelete_for_case2b2(void){
 }
 
 /**
- *    case 3 - siblingLeft(node10) is double black
+ *    caseLeft 3 - siblingLeft(node10) is double black
  *    
  *         /                         /                   /    
- *       20(B)     rotate left     50(B)     case 2    50(B)  
+ *       20(B)     rotate left     50(B)     caseLeft 2    50(B)  
  *      //  \     ----------->    /   \     ------->  /   \
  *    10(B) 50(R)  at node20   20(R)  70(B)         20(B) 70(B)
  *          /  \              //  \                /   \
  *       30(B)70(B)         10(B) 30(B)           -   30(R)
  *
  */
-void test_rbtDelete_for_case3(void){
+void test_rbtDelete_for_caseLeft3(void){
   Node *root = &node20;
   
   initNode(&node20, &node10, &node50, BLACK);
