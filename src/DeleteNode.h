@@ -22,6 +22,8 @@ void caseLeftThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseLeftDoubleBlack(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseRightOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void caseRightOneBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void intRbtDelete(Node **nodePtr, Node *node);
 void rbtDelete(Node **nodePtr, Node *node);
 
