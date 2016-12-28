@@ -12,13 +12,11 @@
  * Return: retObj (structure of the particular stored node)
  *
  */ 
-ReturnedObject rbtRemoveNode(Node *nodePtr){
+ReturnedObject rbtRemovedNode(Node *nodePtr){
   ReturnedObject retObj;
   
   retObj.removedNode = nodePtr;
-  retObj.returnedColour = DOUBLE_BLACK;
-  
-  retObj.removedNode->colour = retObj.returnedColour;
+  retObj.returnedColour = nodePtr->colour;
   
   return retObj;
 }
@@ -352,7 +350,7 @@ void caseLeftTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue){
  *    caseLeft 3 - double black node can be either a node or null.
  *    
  *         /                         /                   /    
- *       20(B)     rotate left     50(B)     caseLeft 2    50(B)  
+ *       20(B)     rotate left     50(B)     case 2    50(B)  
  *      //  \      ----------->   /   \     ------->  /   \
  *    10(B) 50(R)  at node20   20(R)  70(B)         20(B) 70(B)
  *          /  \               //  \                /   \
@@ -822,24 +820,29 @@ void caseRightDoubleBlack(Node **nodePtr, ReturnedObject deletedNode, int nodeVa
   caseRightThree(nodePtr, deletedNode, nodeValue);
 }
 
-void intRbtDelete(Node **nodePtr, Node *node){
+void intRbtRemove(Node **nodePtr, Node *node){
   ReturnedObject retObj;
   
   if(*nodePtr == node){
-    retObj = rbtRemoveNode(*nodePtr);
+    (*nodePtr)->colour = DOUBLE_BLACK;
+    retObj = rbtRemovedNode(*nodePtr);
     return;
+  }
+  else if(*nodePtr == NULL){
+    retObj = rbtRemovedNode(node);
+    return; // need to take care -> double black null couldn't take care.
   }
   
   if(node->value < (*nodePtr)->value){
-    intRbtDelete(&((*nodePtr)->left), node);
-    caseLeftDoubleBlack(nodePtr, retObj, (*nodePtr)->value);
+    intRbtRemove(&((*nodePtr)->left), node);
+    caseLeftDoubleBlack(nodePtr, retObj, node->value);
   }
   else if(node->value > (*nodePtr)->value){
-    intRbtDelete(&((*nodePtr)->right), node);
-    caseRightDoubleBlack(nodePtr, retObj, (*nodePtr)->value);
+    intRbtRemove(&((*nodePtr)->right), node);
+    caseRightDoubleBlack(nodePtr, retObj, node->value);
   }
 }
 
-void rbtDelete(Node **nodePtr, Node *node){
-  intRbtDelete(nodePtr, node);
+void rbtRemove(Node **nodePtr, Node *node){
+  intRbtRemove(nodePtr, node);
 }

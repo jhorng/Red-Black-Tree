@@ -12,7 +12,7 @@ struct ReturnedObject{
   Colour returnedColour;
 };
 
-ReturnedObject rbtRemoveNode(Node *nodePtr);
+ReturnedObject rbtRemovedNode(Node *nodePtr);
 void caseLeftOneAOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseLeftOneATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseLeftOneBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
@@ -32,7 +32,7 @@ void caseRightTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue)
 void caseRightTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void intRbtDelete(Node **nodePtr, Node *node);
-void rbtDelete(Node **nodePtr, Node *node);
+void intRbtRemove(Node **nodePtr, Node *node);
+void rbtRemove(Node **nodePtr, Node *node);
 
 #endif // DeleteNode_H
