@@ -359,7 +359,7 @@ void test_caseLeft2A2_given_siblingRight_is_black_and_both_siblingRight_children
  *     null 50(B)               null  50(R)
  *
  */
-void test_caseLeft2A2_given_siblingRight_is_null_and_double_black(void){
+void test_caseLeft2A2_given_siblingLeft_is_null_and_double_black(void){
   Node *root = &node20;
   ReturnedObject retObj;
   
@@ -1014,4 +1014,296 @@ void test_caseRightOneBTwo_with_parent_and_siblingLeft_are_black_and_rightChildL
   CTEST_ASSERT_EQUAL_NODE(&node50, &node40, &node70, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
+}
+
+/**
+ *    caseRight 2a(1) - node70 is double black node.
+ *                    - Parent, siblingLeft, and children of siblingLeft are black.
+ *                    - Colour flipped for parent and siblingRight to be double black and red respectively.
+ *    
+ *           /                         //   
+ *         50(B)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)  70(B)               30(R)  -
+ *     /   \                      /  \
+ *  20(B) 40(B)                20(B) 40(B)
+ *
+ */
+void test_caseRight2A1_given_parent_siblingRight_children_of_siblingLeft_are_black_with_siblingRight_is_double_black_will_flip_colour(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, &node20, &node40, BLACK);
+  initNode(&node70, NULL, NULL, DOUBLE_BLACK);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  caseRightTwoAOne(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, DOUBLE_BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node40, RED, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
+}
+
+/**
+ *    caseRight 2a(1) - SiblingRight is double black node but null.
+ *                    - Parent, siblingLeft, and children of siblingLeft are black.
+ *                    - Colour flipped for parent and siblingRight to be double black and red respectively.
+ *    
+ *           /                         //   
+ *         50(B)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)   -                  30(R)  -
+ *     /   \                      /  \
+ *  20(B) 40(B)                20(B) 40(B)
+ *
+ */
+void test_siblingRight_is_null_but_double_black_will_flip_colour_when_parent_siblingLeft_and_children_of_siblingLeft_are_black(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, NULL, BLACK);
+  initNode(&node30, &node20, &node40, BLACK);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node70);
+  caseRightTwoAOne(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, DOUBLE_BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node40, RED, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
+}
+
+/**
+ *    caseRight 2a(2) - SiblingRight(node70) is double black.
+ *                    - Parent and siblingLeft are black.
+ *                    - Both child of siblingLeft are null.
+ *    
+ *           /                         //   
+ *         50(B)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)  70(B)               30(R)  -
+ *     /   \  /   \               /  \
+ *    -    - -    -              -   -
+ *
+ */
+void test_caseRight2A2_given_parent_and_siblingLeft_are_black_and_both_children_of_siblingLeft_are_null(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node70, NULL, NULL, DOUBLE_BLACK);
+  
+  caseRightTwoATwo(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, DOUBLE_BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
+}
+
+/**
+ *    caseRight 2a(2) - SiblingRight is double black but null.
+ *                    - Parent and siblingLeft are black.
+ *                    - Both child of siblingLeft are null.
+ *    
+ *           /                         //   
+ *         50(B)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)   -                  30(R)  -
+ *     /   \                      /  \
+ *    -    -                     -   - 
+ *
+ */
+void test_caseRight2A2_given_parent_and_siblingLeft_are_black_and_the_children_of_siblingLeft_are_null(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, NULL, BLACK);
+  initNode(&node30, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node70);
+  caseRightTwoATwo(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, DOUBLE_BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, RED, 30);
+}
+
+/**
+ *   caseRight 2b(1) - SiblingRight is a double black node.
+ *                   - SiblingLeft and its children are black with the parent is red.
+ *    
+ *           /                         /   
+ *         50(R)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)  70(B)               30(R)  -
+ *     /   \                      /  \
+ *  20(B) 40(B)                20(B) 40(B)
+ *
+ */
+void test_caseRight2B1_given_siblingLeft_and_its_children_are_black_with_the_parent_is_red(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, &node70, RED);
+  initNode(&node30, &node20, &node40, BLACK);
+  initNode(&node70, NULL, NULL, DOUBLE_BLACK);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  caseRightTwoBOne(&root, retObj, 50);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node40, RED, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
+}
+
+/**
+ *   caseRight 2b(1) - SiblingRight is double black but null.
+ *                   - SiblingLeft and its children are black with the parent is red.
+ *    
+ *           /                         /   
+ *         50(R)     flip colour     50(B)  
+ *        /   \\     ----------->   /    \
+ *     30(B)   -                  30(R)  -
+ *     /   \                      /  \
+ *  20(B) 40(B)                20(B) 40(B)
+ *
+ */
+void test_caseRight2B1_given_siblingRight_is_null_but_double_black_siblingLeft_and_its_children_are_black_with_the_parent_is_red(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, NULL, RED);
+  initNode(&node30, &node20, &node40, BLACK);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node70);
+  caseRightTwoBOne(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node30, NULL, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node40, RED, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
+}
+
+/**
+ *   caseRight 2b(2) - Double black node can be a node or null.
+ *                   - Parent is red and siblingLeft is black.
+ *                   - Children of siblingLeft are null.
+ *    
+ *         /                         /    
+ *       20(R)     flip colour     20(B)   
+ *      /   \\     ----------->    /   \
+ *    10(B) 50(B)               10(R)  -
+ *    /  \                      /  \
+ *   -   -                     -   -
+ *
+ */
+void test_caseRight2B2_given_parent_is_red_and_siblingLeft_is_black_and_children_of_siblingLeft_are_null(void){
+  Node *root = &node20;
+  ReturnedObject retObj;
+  
+  initNode(&node20, &node10, &node50, RED);
+  initNode(&node10, NULL, NULL, BLACK);
+  initNode(&node50, NULL, NULL, DOUBLE_BLACK);
+  
+  caseRightTwoBTwo(&root, retObj, 50);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
+}
+
+/**
+ *  caseRight 2b(2) - Double black node can be a node or null.
+ *                  - Parent is red and siblingLeft is black.
+ *                  - Children of siblingLeft are null.
+ *    
+ *         /                         /    
+ *       20(R)     flip colour     20(B)   
+ *      /   \\     ----------->    /   \
+ *    10(B)  -                  10(R)  -
+ *    /  \                      /  \
+ *   -   -                     -   -
+ *
+ */
+void test_caseRight2B2_given_siblingRight_is_null_and_double_black_and_parent_is_red_and_siblingLeft_is_black_and_children_of_siblingLeft_are_null(void){
+  Node *root = &node20;
+  ReturnedObject retObj;
+  
+  initNode(&node20, &node10, NULL, RED);
+  initNode(&node10, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node50);
+  caseRightTwoBTwo(&root, retObj, 50);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node20, &node10, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, RED, 10);
+}
+
+/**
+ *    caseRight 3 - SiblingRight is double black.
+ *                - Parent, siblingLeft and children of siblingLeft are black.
+ *                - Right rotation and case 2 are used to balance the tree.
+ *    
+ *           /                          /                       /
+ *         50(B)     rotate right     30(B)      case 2       30(B)
+ *        /   \\     ----------->    /    \      ------>     /    \
+ *     30(R)  70(B)                20(B) 50(R)             20(B) 50(B)
+ *     /   \                            /   \\                   /   \
+ *  20(B) 40(B)                       40(B) 70(B)             40(R)  -
+ *
+ */
+void test_caseRight3_given_the_sblingRight_is_red_and_siblingLeft_is_double_black(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, &node20, &node40, RED);
+  initNode(&node70, NULL, NULL, DOUBLE_BLACK);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  caseRightThree(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node50, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node40, NULL, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
+}
+
+/**
+ *    caseRight 3 - SiblingRight is double black but null.
+ *                - Parent, siblingLeft and children of siblingLeft are black.
+ *                - Right rotation and case 2 are used to balance the tree.
+ *     
+ *           /                          /                       /
+ *         50(B)     rotate right     30(B)      case 2       30(B)
+ *        /   \\     ----------->    /    \      ------>     /    \
+ *     30(R)   -                   20(B) 50(R)             20(B) 50(B)
+ *     /   \                            /   \\                   /   \
+ *  20(B) 40(B)                       40(B)  -                40(R)  -
+ *
+ */
+void test_caseRight3_given_parent_siblingLeft_and_children_of_siblingLeft_are_black_while_siblingRight_is_double_black_null(void){
+  Node *root = &node50;
+  ReturnedObject retObj;
+  
+  initNode(&node50, &node30, &node70, BLACK);
+  initNode(&node30, &node20, &node40, RED);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node40, NULL, NULL, BLACK);
+  
+  retObj = rbtRemoveNode(&node70);
+  caseRightThree(&root, retObj, 70);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node20, &node50, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, BLACK, 20);
+  CTEST_ASSERT_EQUAL_NODE(&node50, &node40, NULL, BLACK, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
 }
