@@ -1,5 +1,5 @@
-#ifndef DeleteNode_H
-#define DeleteNode_H
+#ifndef RemoveNode_H
+#define RemoveNode_H
 
 #include "Node.h"
 
@@ -32,7 +32,8 @@ void caseRightTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue)
 void caseRightTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
+void swapNode(Node **node1, Node *node2);
 void intRbtRemove(Node **nodePtr, Node *node);
 void rbtRemove(Node **nodePtr, Node *node);
 
-#endif // DeleteNode_H
+#endif // RemoveNode_H

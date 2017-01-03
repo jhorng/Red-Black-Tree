@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "DeleteNode.h"
+#include "RemoveNode.h"
 #include "CustomAssertion.h"
 #include "Node.h"
 #include "Rotation.h"
@@ -590,7 +590,7 @@ void test_rbtRemove_for_caseLeft1a1(void){
 
 /**
  *    "rbtRemove"
- *    caseLeft 1a(1) - node40 will be removed and rotate left at node70.
+ *    caseLeft 1a(1) - SiblingLeft(node40) is a double black null.
  *
  *
  *        /    rotate left    /    
@@ -602,13 +602,13 @@ void test_rbtRemove_for_caseLeft1a1(void){
  *
  */
 void test_rbtRemove_for_caseLeft1a1_given_the_target_node_has_removed(void){
-  Node *root = &node120;
+  Node *root = &node70;
   
   initNode(&node70, NULL, &node90, RED);
   initNode(&node90, NULL, &node100, BLACK);
   initNode(&node100, NULL, NULL, RED);
   
-  rbtRemove(&root, &node40);
+  rbtRemove(&root, &node40); // problem ---> double black null can't detect.
   
   CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, RED, 90);
   CTEST_ASSERT_EQUAL_NODE(&node70, NULL, NULL, BLACK, 70);
@@ -1640,4 +1640,18 @@ void test_rbtRemove_caseRight3(void){
   CTEST_ASSERT_EQUAL_NODE(&node50, &node40, NULL, BLACK, 50);
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
 }
+
+void test_nodeA_swaps_with_nodeB(void){
+  Node *nodeA = &node50;
+  Node *nodeB = &node30;
+  
+  initNode(&node50, &node30, NULL, BLACK);
+  initNode(&node30, NULL, NULL, RED);
+  
+  swapNode(&nodeA, &node30);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node30, &node50, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
+}
+
 
