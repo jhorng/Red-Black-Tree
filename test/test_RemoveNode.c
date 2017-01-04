@@ -1643,17 +1643,14 @@ void test_rbtRemove_caseRight3(void){
 
 /**
  *    
- *       50(R)   swap Node     30(B)   
- *      /       ---------->    /   \
- *    30(B)                  50(R)  -
+ *       50(B)   swap Node     30(B)   
+ *      /       ---------->   //   \
+ *    30(R)                  50(B)  -
  *   /  \                   /  \
  *  -   -                  -   -
  *
  */
-void test_root_swaps_with_leftChild(void){
-  Node *nodeA = &node50;
-  Node *nodeB = &node30;
-  
+void test_root_swaps_with_leftChild(void){  
   initNode(&node50, &node30, NULL, BLACK);
   initNode(&node30, NULL, NULL, RED);
   
@@ -1665,25 +1662,55 @@ void test_root_swaps_with_leftChild(void){
 
 /**
  *      
- *       50(R)    swap Node     30(B)   
- *          \    ---------->    /   \
- *        30(B)                -   50(R)
- *        /  \                     /  \
- *       -   -                    -   -
+ *       50(B)    replacing node       
+ *          \    --------------->  80(R)  
+ *        80(R)                
+ *        /  \                    
+ *       -   -                   
  *
  */
 void test_root_swaps_with_rightChild(void){
-  Node *nodeA = &node50;
-  Node *nodeB = &node30;
+  Node *root = &node50;
+  Node *replaceNode;
   
-  initNode(&node50, NULL, &node30, BLACK);
-  initNode(&node30, NULL, NULL, RED);
+  initNode(&node50, NULL, &node80, BLACK);
+  initNode(&node80, NULL, NULL, RED);
   
-  swapNode(&node50, &node30);
+  replaceNode=findReplacingNode(root->right);
   
-  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node50, BLACK, 30);
-  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, DOUBLE_BLACK, 50);
+  TEST_ASSERT_EQUAL_PTR(&node80, replaceNode);
+  TEST_ASSERT_EQUAL(NULL, replaceNode->left);
+  TEST_ASSERT_EQUAL(NULL, replaceNode->right);
+  TEST_ASSERT_EQUAL(RED, replaceNode->colour);
+  TEST_ASSERT_EQUAL(80, replaceNode->value); 
 }
 
-
-
+/**
+ *    Find node60 as the replacing node given node50 is the target.      
+ *
+ *       50(B)    replacing node     
+ *      /   \    --------------> 60(B)
+ *   20(R) 80(R)           
+ *   /     /   \           
+ * 10(B) 60(B) 90(B)       
+ *
+ */
+void test_findReplacingNode_node60_given_node50_is_the_target(void){
+  Node *root = &node50;
+  Node *replaceNode;
+  
+  initNode(&node50, &node20, &node80, BLACK);
+  initNode(&node20, &node10, NULL, RED);
+  initNode(&node80, &node60, &node90, RED);
+  initNode(&node10, NULL, NULL, BLACK);
+  initNode(&node60, NULL, NULL, BLACK);
+  initNode(&node90, NULL, NULL, BLACK);
+  
+  replaceNode=findReplacingNode(root->right);
+  
+  TEST_ASSERT_EQUAL_PTR(&node60, replaceNode);
+  TEST_ASSERT_EQUAL(NULL, replaceNode->left);
+  TEST_ASSERT_EQUAL(NULL, replaceNode->right);
+  TEST_ASSERT_EQUAL(BLACK, replaceNode->colour);
+  TEST_ASSERT_EQUAL(60, replaceNode->value);
+}
