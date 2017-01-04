@@ -1641,17 +1641,49 @@ void test_rbtRemove_caseRight3(void){
   CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, RED, 40);
 }
 
-void test_nodeA_swaps_with_nodeB(void){
+/**
+ *    
+ *       50(R)   swap Node     30(B)   
+ *      /       ---------->    /   \
+ *    30(B)                  50(R)  -
+ *   /  \                   /  \
+ *  -   -                  -   -
+ *
+ */
+void test_root_swaps_with_leftChild(void){
   Node *nodeA = &node50;
   Node *nodeB = &node30;
   
   initNode(&node50, &node30, NULL, BLACK);
   initNode(&node30, NULL, NULL, RED);
   
-  swapNode(&nodeA, &node30);
+  swapNode(&node50, &node30);
   
   CTEST_ASSERT_EQUAL_NODE(&node30, &node50, NULL, BLACK, 30);
-  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, RED, 50);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, DOUBLE_BLACK, 50);
 }
+
+/**
+ *      
+ *       50(R)    swap Node     30(B)   
+ *          \    ---------->    /   \
+ *        30(B)                -   50(R)
+ *        /  \                     /  \
+ *       -   -                    -   -
+ *
+ */
+void test_root_swaps_with_rightChild(void){
+  Node *nodeA = &node50;
+  Node *nodeB = &node30;
+  
+  initNode(&node50, NULL, &node30, BLACK);
+  initNode(&node30, NULL, NULL, RED);
+  
+  swapNode(&node50, &node30);
+  
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, &node50, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, DOUBLE_BLACK, 50);
+}
+
 
 

@@ -820,12 +820,38 @@ void caseRightDoubleBlack(Node **nodePtr, ReturnedObject retObj, int nodeValue){
   caseRightThree(nodePtr, retObj, nodeValue);
 }
 
-void swapNode(Node **node1, Node *node2){
-  Node *tempNode;
+void swapNode(Node *node1, Node *node2){
+  Node *tempNode1, *tempNode2, *leftNode1, *rightNode1;
   
-  tempNode = *node1;
-  node1 = &node2;
-  node2 = tempNode;
+  tempNode1 = node1;
+  tempNode1->left = node1->left;
+  tempNode1->right = node1->right;
+  tempNode1->colour = node1->colour; 
+  tempNode1->value = node1->value;
+  
+  tempNode2 = node2;
+  tempNode2->left = node2->left;
+  tempNode2->right = node2->right;
+  tempNode2->colour = node2->colour; 
+  tempNode2->value = node2->value;
+  
+  node1 = node2;
+  if((tempNode1->left != NULL) && (tempNode1->right == NULL)){
+    node1->left = tempNode1; 
+    node1->right = NULL;
+  }
+  else if((tempNode1->left == NULL) && (tempNode1->right != NULL)){
+    node1->left = NULL; 
+    node1->right = tempNode1;
+  }
+  node1->colour = tempNode1->colour;
+  node1->value = node2->value;
+  
+  node2 = tempNode1;
+  node2->left = NULL;
+  node2->right = NULL;
+  node2->colour = DOUBLE_BLACK;
+  node2->value = tempNode1->value;
 }
 
 void intRbtRemove(Node **nodePtr, Node *node){

@@ -32,7 +32,7 @@ void caseRightTwoATwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue)
 void caseRightTwoBOne(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightTwoBTwo(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
 void caseRightThree(Node **nodePtr, ReturnedObject deletedNode, int nodeValue);
-void swapNode(Node **node1, Node *node2);
+void swapNode(Node *node1, Node *node2);
 void intRbtRemove(Node **nodePtr, Node *node);
 void rbtRemove(Node **nodePtr, Node *node);
 
