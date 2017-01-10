@@ -183,7 +183,7 @@ void caseLeftOneBTwo(Node **nodePtr, ReturnedObject retObj, int nodeValue){
       }
       else if(siblingLeft == NULL){
         if((retObj.removedNode->value == nodeValue) && (retObj.returnedColour == DOUBLE_BLACK)){
-          rotateLeft(&(*nodePtr));
+          rotateRightLeft(&(*nodePtr));
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = BLACK;
           (*nodePtr)->right->colour = BLACK;
@@ -373,27 +373,13 @@ void caseLeftThree(Node **nodePtr, ReturnedObject retObj, int nodeValue){
           rotateLeft(&(*nodePtr));
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = RED;
-          if(((*nodePtr)->left->right->left == NULL) && ((*nodePtr)->left->right->right == NULL)){
-            caseLeftTwoATwo(&((*nodePtr)->left), retObj, nodeValue);
-            caseLeftTwoBTwo(&((*nodePtr)->left), retObj, nodeValue);
-          }
-          else if(((*nodePtr)->left->right->left != NULL) && ((*nodePtr)->left->right->right != NULL)){
-            caseLeftTwoAOne(&((*nodePtr)->left), retObj, nodeValue);
-            caseLeftTwoBOne(&((*nodePtr)->left), retObj, nodeValue);
-          }
+          caseLeftDoubleBlack(&((*nodePtr)->left), retObj, nodeValue);
         }
         else if((siblingLeft == NULL) && (retObj.returnedColour == DOUBLE_BLACK)){
           rotateLeft(&(*nodePtr));
           (*nodePtr)->colour = BLACK;
           (*nodePtr)->left->colour = RED;
-          if(((*nodePtr)->left->right->left == NULL) && ((*nodePtr)->left->right->right == NULL)){
-            caseLeftTwoATwo(&((*nodePtr)->left), retObj, nodeValue);
-            caseLeftTwoBTwo(&((*nodePtr)->left), retObj, nodeValue);
-          }
-          else if(((*nodePtr)->left->right->left != NULL) && ((*nodePtr)->left->right->right != NULL)){
-            caseLeftTwoAOne(&((*nodePtr)->left), retObj, nodeValue);
-            caseLeftTwoBOne(&((*nodePtr)->left), retObj, nodeValue);
-          }
+          caseLeftDoubleBlack(&((*nodePtr)->left), retObj, nodeValue);
         }
       }
     }
@@ -780,27 +766,13 @@ void caseRightThree(Node **nodePtr, ReturnedObject retObj, int nodeValue){
             rotateRight(&(*nodePtr));
             (*nodePtr)->colour = BLACK;
             (*nodePtr)->right->colour = RED;
-            if((leftChildRightLeft(*nodePtr) == NULL) && (rightChildRightLeft(*nodePtr) == NULL)){
-              caseRightTwoATwo(&((*nodePtr)->right), retObj, nodeValue);
-              caseRightTwoBTwo(&((*nodePtr)->right), retObj, nodeValue);
-            }
-            else if(((*nodePtr)->left->right->left != NULL) && ((*nodePtr)->left->right->right != NULL)){
-              caseRightTwoAOne(&((*nodePtr)->right), retObj, nodeValue);
-              caseRightTwoBOne(&((*nodePtr)->right), retObj, nodeValue);
-            }
+            caseRightDoubleBlack(&((*nodePtr)->right), retObj, nodeValue);
           }
           else if((siblingRight == NULL) && (retObj.returnedColour == DOUBLE_BLACK)){
             rotateRight(&(*nodePtr));
             (*nodePtr)->colour = BLACK;
             (*nodePtr)->right->colour = RED;
-            if((leftChildRightLeft(*nodePtr) == NULL) && (rightChildRightLeft(*nodePtr) == NULL)){
-              caseRightTwoATwo(&((*nodePtr)->right), retObj, nodeValue);
-              caseRightTwoBTwo(&((*nodePtr)->right), retObj, nodeValue);
-            }
-            else if((leftChildRightLeft(*nodePtr)!= NULL) && (rightChildRightLeft(*nodePtr) != NULL)){
-              caseRightTwoAOne(&((*nodePtr)->right), retObj, nodeValue);
-              caseRightTwoBOne(&((*nodePtr)->right), retObj, nodeValue);
-            }
+            caseRightDoubleBlack(&((*nodePtr)->right), retObj, nodeValue);
           }
         }
       }
@@ -832,66 +804,21 @@ Node *findReplacingNode(Node *node){
   }  
 }
 
-// This function needs to reconsider whether 
-// it is important to continue developing.
-void swapNode(Node *node1, Node *node2){
-  Node *tempNode1, *tempNode2, *leftNode1, *rightNode1;
-  tempNode1 = malloc(sizeof(Node));
-  
-  tempNode1 = node1;
-  // tempNode1->left = node1->left;
-  // tempNode1->right = node1->right;
-  // tempNode1->colour = node1->colour; 
-  // tempNode1->value = node1->value;
-  
-  tempNode2 = node2;
-  tempNode2->left = node2->left;
-  tempNode2->right = node2->right;
-  tempNode2->colour = node2->colour; 
-  tempNode2->value = node2->value;
-  
-  node1 = node2;
-  if((tempNode1->left != NULL) && (tempNode1->right == NULL)){
-    node1->left = tempNode1; 
-    node1->right = NULL;
-  }
-  else if((tempNode1->left == NULL) && (tempNode1->right != NULL)){
-    node1->left = NULL; 
-    node1->right = tempNode1;
-  }
-  else{
-    node1->left = tempNode1->left;
-    node1->right = tempNode1; 
-  }
-  node1->colour = tempNode1->colour;
-  node1->value = node2->value;
-  
-  node2 = tempNode1;
-  node2->left = NULL;
-  node2->right = NULL; 
-  node2->colour = DOUBLE_BLACK;
-  node2->value = tempNode1->value;
-}
-
 void intRbtRemove(Node **nodePtr, Node *node){
   ReturnedObject retObj;
   
   if(*nodePtr == node){
     (*nodePtr)->colour = DOUBLE_BLACK;
-    retObj = rbtRemovedNode(*nodePtr);
     return;
   }
   else if(*nodePtr == NULL){
-    *nodePtr = node;
-    (*nodePtr)->colour = DOUBLE_BLACK;
-    retObj = rbtRemovedNode(*nodePtr);
-    // node->colour = DOUBLE_BLACK;     // variables cannot pass to
-    // retObj = rbtRemovedNode(node);   // the ReturnedObject structure 
-    return; // need to take care -> double black null couldn't take care.
+    node->colour = DOUBLE_BLACK;
+    return;
   }
   
   if(node->value < (*nodePtr)->value){
     intRbtRemove(&((*nodePtr)->left), node);
+    retObj = rbtRemovedNode(node);
     caseLeftDoubleBlack(nodePtr, retObj, node->value);
   }
   else if(node->value > (*nodePtr)->value){
