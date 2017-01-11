@@ -694,29 +694,26 @@ Node *findReplacingNode(Node *node){
   }  
 }
 
-void intRbtRemove(Node **nodePtr, Node *node){
+Node *rbtRemoveNode(Node **nodePtr, Node *node){
   Node *returnedObject;
   
   if(*nodePtr == node){
-    returnedObject = *nodePtr;
-    *nodePtr = NULL;
-    return;
+    if(((*nodePtr)->left == NULL) && ((*nodePtr)->right == NULL)){
+      returnedObject = *nodePtr;
+      returnedObject->colour = DOUBLE_BLACK;
+      *nodePtr = NULL;
+      return returnedObject;
+    }
   }
-  // else if(*nodePtr == NULL){
-    // node->colour = DOUBLE_BLACK;
-    // return;
-  // }
   
   if(node->value < (*nodePtr)->value){
-    intRbtRemove(&((*nodePtr)->left), node);
-    caseLeftDoubleBlack(nodePtr, returnedObject);
+    rbtRemoveNode(&((*nodePtr)->left), node);
   }
   else if(node->value > (*nodePtr)->value){
-    intRbtRemove(&((*nodePtr)->right), node);
-    caseRightDoubleBlack(nodePtr, returnedObject);
+    rbtRemoveNode(&((*nodePtr)->right), node);
   }
 }
 
 void rbtRemove(Node **nodePtr, Node *node){
-  intRbtRemove(nodePtr, node);
+  // rbtRemoveNode(nodePtr, node); // not fixed yet
 }

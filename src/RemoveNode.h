@@ -29,7 +29,7 @@ void caseRightTwoBTwo(Node **nodePtr, Node *returnedObject);
 void caseRightThree(Node **nodePtr, Node *returnedObject);
 void caseRightDoubleBlack(Node **nodePtr, Node *returnedObject);
 Node *findReplacingNode(Node *node);
-void intRbtRemove(Node **nodePtr, Node *node);
+Node *rbtRemoveNode(Node **nodePtr, Node *node);
 void rbtRemove(Node **nodePtr, Node *node);
 
 #endif // RemoveNode_H

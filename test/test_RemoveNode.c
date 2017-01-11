@@ -1091,30 +1091,34 @@ void test_findReplacingNode_node60_given_node50_is_the_target(void){
 }
 
 /**
- *    "rbtRemove"
- *    caseLeft 1a(1) - node40 will be removed and rotate left at node70.
- *
- *
- *        /       rotate left    /
- *     70(R)      ---------->  90(R)
- *    //   \                  /   \
- *  40(B)  90(B)            70(B)100(B)
- *           \              /
- *          100(R)        40(B)
+ *    "rbtRemoveNode"
+ * 
+ *          70(B)                         70(B)
+ *         /    \         remove         /    \
+ *      40(R)   90(R)    -------->    40(R)   90(R)
+ *     /   \    /   \     node20     //  \    /   \
+ *  20(B)30(B)80(B)100(B)            - 30(B)80(B)100(B)
  *
  */
 void test_rbtRemove_for_caseLeft1a1(void){
   Node *root = &node70;
+  Node *returnedObject;
   
-  initNode(&node70, &node40, &node90, RED);
-  initNode(&node40, NULL, NULL, BLACK);
-  initNode(&node90, NULL, &node100, BLACK);
-  initNode(&node100, NULL, NULL, RED);
+  initNode(&node70, &node40, &node90, BLACK);
+  initNode(&node40, &node20, &node30, RED);
+  initNode(&node90, &node80, &node100, RED);
+  initNode(&node20, NULL, NULL, BLACK);
+  initNode(&node30, NULL, NULL, BLACK);
+  initNode(&node80, NULL, NULL, BLACK);
+  initNode(&node100, NULL, NULL, BLACK);
   
-  rbtRemove(&root, &node40); // Need to debug
+  returnedObject=rbtRemoveNode(&root, &node20);
   
-  CTEST_ASSERT_EQUAL_NODE(&node90, &node70, &node100, RED, 90);
-  CTEST_ASSERT_EQUAL_NODE(&node70, &node40, NULL, BLACK, 70);
+  TEST_ASSERT_EQUAL_PTR(&node20, returnedObject);
+  CTEST_ASSERT_EQUAL_NODE(&node70, &node40, &node90, BLACK, 70);
+  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, &node30, RED, 40);
+  CTEST_ASSERT_EQUAL_NODE(&node90, &node80, &node100, RED, 90);
+  CTEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, BLACK, 30);
+  CTEST_ASSERT_EQUAL_NODE(&node80, NULL, NULL, BLACK, 80);
   CTEST_ASSERT_EQUAL_NODE(&node100, NULL, NULL, BLACK, 100);
-  CTEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, BLACK, 40);
 }
