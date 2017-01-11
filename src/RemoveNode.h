@@ -3,38 +3,32 @@
 
 #include "Node.h"
 
+#define isAnyOneDoubleBlack(currNode, removedNode)  ((((currNode) != NULL)&&((currNode)->colour == DOUBLE_BLACK)) || \
+                                                     (((currNode) == NULL)&&((removedNode)->colour == DOUBLE_BLACK)) )
 #define leftChildRightLeft(x) (x)->right->left->left
 #define rightChildRightLeft(x) (x)->right->left->right
 
-typedef struct ReturnedObject ReturnedObject;
-struct ReturnedObject{
-  Node *removedNode;
-  Colour returnedColour;
-};
-
-ReturnedObject rbtRemovedNode(Node *nodePtr);
-void caseLeftOneAOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftOneATwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftOneBOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftOneBTwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftTwoAOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftTwoATwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftTwoBOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftTwoBTwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftThree(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseLeftDoubleBlack(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightOneAOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightOneATwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightOneBOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightOneBTwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightTwoAOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightTwoATwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightTwoBOne(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightTwoBTwo(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightThree(Node **nodePtr, ReturnedObject retObj, int nodeValue);
-void caseRightDoubleBlack(Node **nodePtr, ReturnedObject retObj, int nodeValue);
+void caseLeftOneAOne(Node **nodePtr, Node *returnedObject);
+void caseLeftOneATwo(Node **nodePtr, Node *returnedObject);
+void caseLeftOneBOne(Node **nodePtr, Node *returnedObject);
+void caseLeftOneBTwo(Node **nodePtr, Node *returnedObject);
+void caseLeftTwoAOne(Node **nodePtr, Node *returnedObject);
+void caseLeftTwoATwo(Node **nodePtr, Node *returnedObject);
+void caseLeftTwoBOne(Node **nodePtr, Node *returnedObject);
+void caseLeftTwoBTwo(Node **nodePtr, Node *returnedObject);
+void caseLeftThree(Node **nodePtr, Node *returnedObject);
+void caseLeftDoubleBlack(Node **nodePtr, Node *returnedObject);
+void caseRightOneAOne(Node **nodePtr, Node *returnedObject);
+void caseRightOneATwo(Node **nodePtr, Node *returnedObject);
+void caseRightOneBOne(Node **nodePtr, Node *returnedObject);
+void caseRightOneBTwo(Node **nodePtr, Node *returnedObject);
+void caseRightTwoAOne(Node **nodePtr, Node *returnedObject);
+void caseRightTwoATwo(Node **nodePtr, Node *returnedObject);
+void caseRightTwoBOne(Node **nodePtr, Node *returnedObject);
+void caseRightTwoBTwo(Node **nodePtr, Node *returnedObject);
+void caseRightThree(Node **nodePtr, Node *returnedObject);
+void caseRightDoubleBlack(Node **nodePtr, Node *returnedObject);
 Node *findReplacingNode(Node *node);
-void swapNode(Node *node1, Node *node2);
 void intRbtRemove(Node **nodePtr, Node *node);
 void rbtRemove(Node **nodePtr, Node *node);
 
